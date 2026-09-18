@@ -1,0 +1,318 @@
+=== BUILDING JAVA MAPREDUCE JOBS ===
+built /Users/abhishek/Documents/projects/BD PROJECT/DA2/code/mr/java/build/olist-mr.jar
+-rw-r--r--@ 1 abhishek  staff  33720 Sep 16 14:31 /Users/abhishek/Documents/projects/BD PROJECT/DA2/code/mr/java/build/olist-mr.jar
+
+###################################################################
+# revenue_by_product
+###################################################################
+2026-09-16 14:31:13,857 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-09-16 14:31:14,020 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+2026-09-16 14:31:14,124 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/abhishek/.staging/job_1789548705433_0006
+2026-09-16 14:31:14,215 INFO input.FileInputFormat: Total input files to process : 1
+2026-09-16 14:31:14,260 INFO mapreduce.JobSubmitter: number of splits:1
+2026-09-16 14:31:14,311 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1789548705433_0006
+2026-09-16 14:31:14,311 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-09-16 14:31:14,351 INFO conf.Configuration: resource-types.xml not found
+2026-09-16 14:31:14,351 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-09-16 14:31:14,364 INFO impl.YarnClientImpl: Submitted application application_1789548705433_0006
+2026-09-16 14:31:14,372 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1789548705433_0006/
+2026-09-16 14:31:14,372 INFO mapreduce.Job: Running job: job_1789548705433_0006
+2026-09-16 14:31:17,423 INFO mapreduce.Job: Job job_1789548705433_0006 running in uber mode : false
+2026-09-16 14:31:17,425 INFO mapreduce.Job:  map 0% reduce 0%
+2026-09-16 14:31:20,459 INFO mapreduce.Job:  map 100% reduce 0%
+2026-09-16 14:31:24,498 INFO mapreduce.Job:  map 100% reduce 67%
+2026-09-16 14:31:26,513 INFO mapreduce.Job:  map 100% reduce 100%
+2026-09-16 14:31:26,518 INFO mapreduce.Job: Job job_1789548705433_0006 completed successfully
+2026-09-16 14:31:26,549 INFO mapreduce.Job: Counters: 53
+	File System Counters
+		FILE: Number of bytes read=1416911
+		FILE: Number of bytes written=4108129
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=15438809
+		HDFS: Number of bytes written=1306927
+		HDFS: Number of read operations=18
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=6
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Killed reduce tasks=1
+		Launched map tasks=1
+		Launched reduce tasks=3
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=1966
+		Total time spent by all reduces in occupied slots (ms)=5958
+		Total time spent by all map tasks (ms)=983
+		Total time spent by all reduce tasks (ms)=2979
+		Total vcore-milliseconds taken by all map tasks=983
+		Total vcore-milliseconds taken by all reduce tasks=2979
+		Total megabyte-milliseconds taken by all map tasks=1006592
+		Total megabyte-milliseconds taken by all reduce tasks=3050496
+	Map-Reduce Framework
+		Map input records=112651
+		Map output records=112650
+		Map output bytes=4618650
+		Map output materialized bytes=1416911
+		Input split bytes=138
+		Combine input records=112650
+		Combine output records=32951
+		Reduce input groups=32951
+		Reduce shuffle bytes=1416911
+		Reduce input records=32951
+		Reduce output records=32951
+		Spilled Records=65902
+		Shuffled Maps =3
+		Failed Shuffles=0
+		Merged Map outputs=3
+		GC time elapsed (ms)=21
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+		Total committed heap usage (bytes)=699400192
+	RevenueByProduct$Stats
+		HEADER_RECORDS=1
+		VALID_RECORDS=112650
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=15438671
+	File Output Format Counters 
+		Bytes Written=1306927
+[exit 0] log: /Users/abhishek/Documents/projects/BD PROJECT/DA2/logs/mr_revenue_by_product.log
+
+###################################################################
+# orders_by_month
+###################################################################
+2026-09-16 14:31:27,246 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-09-16 14:31:27,404 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+2026-09-16 14:31:27,499 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/abhishek/.staging/job_1789548705433_0007
+2026-09-16 14:31:27,589 INFO input.FileInputFormat: Total input files to process : 1
+2026-09-16 14:31:27,636 INFO mapreduce.JobSubmitter: number of splits:1
+2026-09-16 14:31:27,689 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1789548705433_0007
+2026-09-16 14:31:27,689 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-09-16 14:31:27,728 INFO conf.Configuration: resource-types.xml not found
+2026-09-16 14:31:27,728 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-09-16 14:31:27,741 INFO impl.YarnClientImpl: Submitted application application_1789548705433_0007
+2026-09-16 14:31:27,748 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1789548705433_0007/
+2026-09-16 14:31:27,748 INFO mapreduce.Job: Running job: job_1789548705433_0007
+2026-09-16 14:31:34,839 INFO mapreduce.Job: Job job_1789548705433_0007 running in uber mode : false
+2026-09-16 14:31:34,841 INFO mapreduce.Job:  map 0% reduce 0%
+2026-09-16 14:31:37,884 INFO mapreduce.Job:  map 100% reduce 0%
+2026-09-16 14:31:41,918 INFO mapreduce.Job:  map 100% reduce 100%
+2026-09-16 14:31:41,928 INFO mapreduce.Job: Job job_1789548705433_0007 completed successfully
+2026-09-16 14:31:41,981 INFO mapreduce.Job: Counters: 53
+	File System Counters
+		FILE: Number of bytes read=328
+		FILE: Number of bytes written=637377
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=17655042
+		HDFS: Number of bytes written=291
+		HDFS: Number of read operations=8
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Launched map tasks=1
+		Launched reduce tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=2062
+		Total time spent by all reduces in occupied slots (ms)=1846
+		Total time spent by all map tasks (ms)=1031
+		Total time spent by all reduce tasks (ms)=923
+		Total vcore-milliseconds taken by all map tasks=1031
+		Total vcore-milliseconds taken by all reduce tasks=923
+		Total megabyte-milliseconds taken by all map tasks=1055744
+		Total megabyte-milliseconds taken by all reduce tasks=945152
+	Map-Reduce Framework
+		Map input records=99442
+		Map output records=96478
+		Map output bytes=1157736
+		Map output materialized bytes=328
+		Input split bytes=128
+		Combine input records=96478
+		Combine output records=23
+		Reduce input groups=23
+		Reduce shuffle bytes=328
+		Reduce input records=23
+		Reduce output records=23
+		Spilled Records=46
+		Shuffled Maps =1
+		Failed Shuffles=0
+		Merged Map outputs=1
+		GC time elapsed (ms)=12
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+		Total committed heap usage (bytes)=502267904
+	OrdersByMonth$Stats
+		HEADER_RECORDS=1
+		NON_DELIVERED_ORDERS=2963
+		VALID_ORDERS=96478
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=17654914
+	File Output Format Counters 
+		Bytes Written=291
+[exit 0] log: /Users/abhishek/Documents/projects/BD PROJECT/DA2/logs/mr_orders_by_month.log
+
+streaming jar: /opt/homebrew/opt/hadoop/libexec/share/hadoop/tools/lib/hadoop-streaming-3.5.0.jar
+
+###################################################################
+# payment_distribution
+###################################################################
+2026-09-16 14:31:42,709 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+packageJobJar: [/var/folders/7d/m5lkdhdj2pv8xf1hwvx3xvj80000gn/T/hadoop-unjar11604697813915713487/] [] /var/folders/7d/m5lkdhdj2pv8xf1hwvx3xvj80000gn/T/streamjob1180642578640907733.jar tmpDir=null
+2026-09-16 14:31:42,906 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+2026-09-16 14:31:42,946 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+2026-09-16 14:31:43,014 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/abhishek/.staging/job_1789548705433_0008
+2026-09-16 14:31:43,193 INFO mapred.FileInputFormat: Total input files to process : 1
+2026-09-16 14:31:43,651 INFO mapreduce.JobSubmitter: number of splits:2
+2026-09-16 14:31:44,143 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1789548705433_0008
+2026-09-16 14:31:44,143 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-09-16 14:31:44,213 INFO conf.Configuration: resource-types.xml not found
+2026-09-16 14:31:44,214 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-09-16 14:31:44,231 INFO impl.YarnClientImpl: Submitted application application_1789548705433_0008
+2026-09-16 14:31:44,238 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1789548705433_0008/
+2026-09-16 14:31:44,238 INFO mapreduce.Job: Running job: job_1789548705433_0008
+2026-09-16 14:31:49,309 INFO mapreduce.Job: Job job_1789548705433_0008 running in uber mode : false
+2026-09-16 14:31:49,311 INFO mapreduce.Job:  map 0% reduce 0%
+2026-09-16 14:31:56,378 INFO mapreduce.Job:  map 100% reduce 0%
+2026-09-16 14:32:00,408 INFO mapreduce.Job:  map 100% reduce 100%
+2026-09-16 14:32:02,430 INFO mapreduce.Job: Job job_1789548705433_0008 completed successfully
+2026-09-16 14:32:02,473 INFO mapreduce.Job: Counters: 50
+	File System Counters
+		FILE: Number of bytes read=333
+		FILE: Number of bytes written=1292180
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=5781484
+		HDFS: Number of bytes written=154
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=4
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Launched map tasks=2
+		Launched reduce tasks=2
+		Data-local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=19298
+		Total time spent by all reduces in occupied slots (ms)=9412
+		Total time spent by all map tasks (ms)=9649
+		Total time spent by all reduce tasks (ms)=4706
+		Total vcore-milliseconds taken by all map tasks=9649
+		Total vcore-milliseconds taken by all reduce tasks=4706
+		Total megabyte-milliseconds taken by all map tasks=9880576
+		Total megabyte-milliseconds taken by all reduce tasks=4818944
+	Map-Reduce Framework
+		Map input records=103887
+		Map output records=103886
+		Map output bytes=1991446
+		Map output materialized bytes=345
+		Input split bytes=250
+		Combine input records=103886
+		Combine output records=10
+		Reduce input groups=5
+		Reduce shuffle bytes=345
+		Reduce input records=10
+		Reduce output records=5
+		Spilled Records=20
+		Shuffled Maps =4
+		Failed Shuffles=0
+		Merged Map outputs=4
+		GC time elapsed (ms)=25
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+		Total committed heap usage (bytes)=743440384
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=5781234
+	File Output Format Counters 
+		Bytes Written=154
+2026-09-16 14:32:02,473 INFO streaming.StreamJob: Output directory: /olist/out/payment_distribution
+[exit 0] log: /Users/abhishek/Documents/projects/BD PROJECT/DA2/logs/mr_payment_distribution.log
+
+=== RESULTS PULLED TO /Users/abhishek/Documents/projects/BD PROJECT/DA2/out ===
+revenue_by_product       32951 lines
+orders_by_month          23 lines
+payment_distribution     5 lines
+
+=== JOB 1: TOP 15 PRODUCTS BY REVENUE ===
+product_id                                revenue
+bb50f2e236e5eea0100680137654686c         67606.10
+d1c427060a0f73f6b889a5c7c61f2ac4         60976.03
+6cdd53843498f92890544667809f1595         59093.99
+99a4788cb24856965c36a24e339b6058         51071.60
+d6160fb7873f184099d9bc95e30376af         50326.18
+3dd2a17168ec895c781a9191c1e95ad7         48212.22
+aca2eb7d00ea1a7b8ebd4e68314663af         44820.76
+5f504b3a1c75b73d6151be81eb05bdc9         41725.81
+25c38557cf793876c5abdd5931f922db         40311.95
+53b36df67ebb7c41585e8d54d6772e08         39957.93
+e0d64dcfaa3b6db5c54ca298ae101d05         35344.09
+422879e10f46682990de24d770e7f83d         34201.26
+d285360f29ac7fd97640bf0baef03de0         33607.57
+f1c7f353075ce59d8a6f3cf58f419c9c         33316.76
+7a10781637204d8d10485c71a6108a2e         32790.74
+
+=== JOB 1: REDUCER PARTITION FILES (partitioning evidence) ===
+2026-09-16 14:32:04,266 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+-rw-r--r--   1 abhishek supergroup     436498 2026-09-16 14:31 /olist/out/revenue_by_product/part-r-00000
+-rw-r--r--   1 abhishek supergroup     437337 2026-09-16 14:31 /olist/out/revenue_by_product/part-r-00001
+-rw-r--r--   1 abhishek supergroup     433092 2026-09-16 14:31 /olist/out/revenue_by_product/part-r-00002
+
+=== JOB 2: MONTHLY ORDER VOLUME ===
+2016-09	1
+2016-10	265
+2016-12	1
+2017-01	750
+2017-02	1653
+2017-03	2546
+2017-04	2303
+2017-05	3546
+2017-06	3135
+2017-07	3872
+2017-08	4193
+2017-09	4150
+2017-10	4478
+2017-11	7289
+2017-12	5513
+2018-01	7069
+2018-02	6555
+2018-03	7003
+2018-04	6798
+2018-05	6749
+2018-06	6099
+2018-07	6159
+2018-08	6351
+
+=== JOB 3: PAYMENT-TYPE DISTRIBUTION ===
+payment_type          count          total      average
+boleto                19784     2869361.27       145.03
+debit_card             1529      217989.79       142.57
+not_defined               3           0.00         0.00
+credit_card           76795    12542084.19       163.32
+voucher                5775      379436.87        65.70
+MR_EXIT=0
+__DONE__

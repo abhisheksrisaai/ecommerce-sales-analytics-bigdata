@@ -1,0 +1,68 @@
+=== ENVIRONMENT ===
+JAVA_HOME   /opt/homebrew/opt/openjdk@21   (openjdk version "21.0.12.1" 2026-08-18)
+HADOOP_HOME /opt/homebrew/opt/hadoop/libexec
+HIVE_HOME   /opt/homebrew/opt/hive/libexec
+SPARK_HOME  /opt/homebrew/opt/apache-spark/libexec
+env file    /Users/abhishek/Documents/projects/BD PROJECT/DA2/code/scripts/env.sh
+
+=== INSTALLING CONFIGURATION ===
+  /opt/homebrew/opt/hadoop/libexec/etc/hadoop/core-site.xml
+  /opt/homebrew/opt/hadoop/libexec/etc/hadoop/hdfs-site.xml
+  /opt/homebrew/opt/hadoop/libexec/etc/hadoop/yarn-site.xml
+  /opt/homebrew/opt/hadoop/libexec/etc/hadoop/mapred-site.xml (with JDK module-access flags)
+  /opt/homebrew/opt/hive/libexec/conf/hive-site.xml
+  /opt/homebrew/opt/hive/libexec/conf/core-site.xml
+  /opt/homebrew/opt/hive/libexec/conf/hdfs-site.xml
+  /opt/homebrew/opt/hive/libexec/conf/mapred-site.xml
+  /opt/homebrew/opt/hive/libexec/conf/yarn-site.xml
+  /opt/homebrew/opt/apache-spark/libexec/conf/{core-site,hdfs-site,yarn-site,hive-site}.xml
+  wrote /opt/homebrew/opt/hive/libexec/conf/hive-env.sh
+
+NameNode already formatted (/Users/abhishek/bd-hadoop-data/dfs/name/current exists) - skipping
+
+=== STARTING HDFS DAEMONS ===
+  started namenode
+  NameNode (RPC) listening on 9000
+  NameNode (web UI) listening on 9870
+  started datanode
+  DataNode (web UI) listening on 9864
+
+=== STARTING YARN DAEMONS ===
+  started resourcemanager
+  ResourceManager listening on 8032
+  started nodemanager
+  NodeManager NOT listening on 8041
+
+=== CLUSTER REPORT ===
+2026-09-16 15:22:35,262 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Configured Capacity: 994610155520 (926.30 GB)
+Present Capacity: 428763713536 (399.32 GB)
+DFS Remaining: 428624748544 (399.19 GB)
+DFS Used: 138964992 (132.53 MB)
+DFS Used%: 0.03%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Badly Distributed Blocks: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+
+=== YARN NODES ===
+2026-09-16 15:22:35,727 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-09-16 15:22:35,746 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at localhost/127.0.0.1:8032
+Total Nodes:1
+         Node-Id	     Node-State	Node-Http-Address	Number-of-Running-Containers
+ localhost:54915	        RUNNING	   localhost:8042	                           0
+
+=== JAVA PROCESSES ===
+13504 ResourceManager
+13588 NodeManager
+14276 Jps
+13334 NameNode
+13417 DataNode

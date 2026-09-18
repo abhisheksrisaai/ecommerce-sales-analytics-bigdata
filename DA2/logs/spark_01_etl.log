@@ -1,0 +1,184 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/16 17:03:26 WARN Utils: Your hostname, Abhisheks-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.4 instead (on interface en0)
+26/09/16 17:03:26 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+/opt/homebrew/opt/apache-spark/libexec/python/lib/pyspark.zip/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/09/16 17:03:27 INFO SparkContext: Running Spark version 4.2.0
+26/09/16 17:03:27 INFO SparkContext: OS info Mac OS X, 26.5, aarch64
+26/09/16 17:03:27 INFO SparkContext: Java version 21.0.12.1
+26/09/16 17:03:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/16 17:03:27 INFO ResourceUtils: ==============================================================
+26/09/16 17:03:27 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/09/16 17:03:27 INFO ResourceUtils: ==============================================================
+26/09/16 17:03:27 INFO SparkContext: Submitted application: Olist ETL and Spark SQL analytics
+26/09/16 17:03:27 INFO SecurityManager: Changing view acls to: abhishek
+26/09/16 17:03:27 INFO SecurityManager: Changing modify acls to: abhishek
+26/09/16 17:03:27 INFO SecurityManager: Changing view acls groups to: abhishek
+26/09/16 17:03:27 INFO SecurityManager: Changing modify acls groups to: abhishek
+26/09/16 17:03:27 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
+26/09/16 17:03:28 INFO Utils: Successfully started service 'sparkDriver' on port 59812.
+26/09/16 17:03:28 INFO SparkEnv: Registering MapOutputTracker
+26/09/16 17:03:28 INFO SparkEnv: Registering BlockManagerMaster
+26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/09/16 17:03:28 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/09/16 17:03:28 INFO DiskBlockManager: Created local directory at /private/var/folders/7d/m5lkdhdj2pv8xf1hwvx3xvj80000gn/T/blockmgr-e58a6ca6-cda9-4e87-9122-6462ebf545ef
+26/09/16 17:03:28 INFO SparkEnv: Registering OutputCommitCoordinator
+26/09/16 17:03:28 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/09/16 17:03:28 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/09/16 17:03:28 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/09/16 17:03:28 INFO ResourceProfile: Limiting resource is cpu
+26/09/16 17:03:28 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/09/16 17:03:28 INFO SecurityManager: Changing view acls to: abhishek
+26/09/16 17:03:28 INFO SecurityManager: Changing modify acls to: abhishek
+26/09/16 17:03:28 INFO SecurityManager: Changing view acls groups to: abhishek
+26/09/16 17:03:28 INFO SecurityManager: Changing modify acls groups to: abhishek
+26/09/16 17:03:28 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
+26/09/16 17:03:28 INFO Executor: Starting executor ID driver on host 192.168.1.4
+26/09/16 17:03:28 INFO Executor: Running Spark version 4.2.0
+26/09/16 17:03:28 INFO Executor: OS info Mac OS X, 26.5, aarch64
+26/09/16 17:03:28 INFO Executor: Java version 21.0.12.1
+26/09/16 17:03:28 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/09/16 17:03:28 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@4f3498e9 for default.
+26/09/16 17:03:28 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 59813.
+26/09/16 17:03:28 INFO NettyBlockTransferService: Server created on 192.168.1.4:59813
+26/09/16 17:03:28 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/09/16 17:03:28 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 192.168.1.4, 59813, None)
+26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: Registering block manager 192.168.1.4:59813 with 1663.2 MiB RAM, BlockManagerId(driver, 192.168.1.4, 59813, None)
+26/09/16 17:03:28 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 192.168.1.4, 59813, None)
+26/09/16 17:03:28 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 192.168.1.4, 59813, None)
+
+=== RAW ROW COUNTS (extract) ===
+orders                     99,441
+order_items               112,650
+customers                  99,441
+products                   32,951
+payments                  103,886
+reviews                    99,224
+sellers                     3,095
+category_translation           71
+
+=== CURATED FACT TABLE ===
+rows after cleaning and joins: 112,650
+columns: order_id, product_category_name, product_id, customer_id, order_item_id, seller_id, shipping_limit_date, price, freight_value, line_revenue, order_status, order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date, purchase_year, purchase_month, delivery_days, is_late, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state, product_name_lenght, product_description_lenght, product_photos_qty, product_weight_g, product_length_cm, product_height_cm, product_width_cm, product_category_name_english, avg_review_score, review_count, order_value, payment_type, installments, category
+
+curated Parquet written to hdfs:///olist/warehouse/olist_curated (partitioned by purchase_month)
+26/09/16 17:03:42 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+
+==============================================================================
+A1. Monthly GMV trend
+==============================================================================
++--------------+------+----------+---------------+
+|purchase_month|orders|gmv       |avg_order_value|
++--------------+------+----------+---------------+
+|2016-09       |1     |143.46    |NULL           |
+|2016-10       |265   |46490.66  |197.27         |
+|2016-12       |1     |19.62     |19.62          |
+|2017-01       |750   |127482.37 |193.31         |
+|2017-02       |1653  |271239.32 |175.34         |
+|2017-03       |2546  |414330.95 |174.57         |
+|2017-04       |2303  |390812.4  |177.54         |
+|2017-05       |3546  |566851.4  |175.15         |
+|2017-06       |3135  |490050.37 |167.78         |
+|2017-07       |3872  |566299.08 |162.15         |
+|2017-08       |4193  |645832.36 |175.67         |
+|2017-09       |4150  |701077.49 |210.32         |
+|2017-10       |4478  |751117.01 |191.52         |
+|2017-11       |7289  |1153364.2 |182.74         |
+|2017-12       |5513  |843078.29 |164.87         |
+|2018-01       |7069  |1077887.46|170.97         |
+|2018-02       |6555  |966168.41 |170.25         |
+|2018-03       |7003  |1120598.24|179.05         |
+|2018-04       |6798  |1132878.93|187.38         |
+|2018-05       |6749  |1128774.52|189.59         |
++--------------+------+----------+---------------+
+only showing top 20 rows
+
+==============================================================================
+A2. Top 10 categories by revenue
+==============================================================================
++---------------------+----------+----------+----------+
+|category             |items_sold|revenue   |avg_review|
++---------------------+----------+----------+----------+
+|health_beauty        |9465      |1412089.53|4.19      |
+|watches_gifts        |5859      |1264333.12|4.07      |
+|bed_bath_table       |10953     |1225209.26|3.92      |
+|sports_leisure       |8431      |1118256.91|4.17      |
+|computers_accessories|7644      |1032723.77|3.99      |
+|furniture_decor      |8160      |880329.92 |3.95      |
+|housewares           |6795      |758392.25 |4.11      |
+|cool_stuff           |3718      |691680.89 |4.19      |
+|auto                 |4140      |669454.75 |4.12      |
+|garden_tools         |4268      |567145.68 |4.08      |
++---------------------+----------+----------+----------+
+
+
+==============================================================================
+A3. Revenue by customer state (top 10)
+==============================================================================
++--------------+------+----------+
+|customer_state|orders|revenue   |
++--------------+------+----------+
+|SP            |40501 |5769703.15|
+|RJ            |12350 |2055401.57|
+|MG            |11354 |1818891.67|
+|RS            |5345  |861472.79 |
+|PR            |4923  |781708.8  |
+|SC            |3546  |595127.78 |
+|BA            |3256  |591137.81 |
+|DF            |2080  |346123.35 |
+|GO            |1957  |334212.35 |
+|ES            |1995  |317657.93 |
++--------------+------+----------+
+
+
+==============================================================================
+A4. Delivery performance by state
+==============================================================================
++--------------+------+-----------------+--------+
+|customer_state|orders|avg_delivery_days|late_pct|
++--------------+------+-----------------+--------+
+|MA            |717   |21.6             |22.73   |
+|CE            |1279  |20.9             |17.04   |
+|BA            |3256  |19.2             |15.48   |
+|RJ            |12350 |15.1             |14.86   |
+|PA            |946   |23.7             |13.85   |
+|ES            |1995  |15.6             |13.63   |
+|PB            |517   |20.5             |12.77   |
+|MS            |701   |15.5             |12.55   |
+|PE            |1593  |18.2             |11.17   |
+|SC            |3546  |14.9             |11.11   |
++--------------+------+-----------------+--------+
+
+
+==============================================================================
+A5. Payment type distribution
+==============================================================================
++------------+------+-------------+---------------+
+|payment_type|orders|revenue      |avg_order_value|
++------------+------+-------------+---------------+
+|credit_card |74883 |1.245280261E7|183.22         |
+|boleto      |19614 |2842240.29   |177.54         |
+|voucher     |2648  |333259.16    |133.27         |
+|debit_card  |1520  |215107.72    |150.08         |
+|NULL        |1     |143.46       |NULL           |
++------------+------+-------------+---------------+
+
+
+==============================================================================
+A6. Review score vs delivery lateness
+==============================================================================
++--------+------+----------------+
+|delivery|items |avg_review_score|
++--------+------+----------------+
+|on_time |100849|4.21            |
+|late    |8520  |2.55            |
++--------+------+----------------+
+
+/opt/homebrew/opt/apache-spark/libexec/python/lib/pyspark.zip/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+/opt/homebrew/opt/apache-spark/libexec/python/lib/pyspark.zip/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+
+wrote out/top_categories.csv

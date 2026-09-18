@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  BCSE402L - Big Data Analytics (TH)
+  DA-2 artefact: MapReduce configuration.
+
+  framework.name = yarn sends jobs through the real two-phase scheduler
+  (ResourceManager allocates containers, NodeManager launches the task JVMs)
+  instead of running in the client JVM as `local` mode would.
+-->
+<configuration>
+
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+
+  <!-- Location of the MapReduce framework JARs inside the YARN containers.
+       Without these the NodeManager cannot start the task JVM. -->
+  <property>
+    <name>yarn.app.mapreduce.am.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/homebrew/opt/hadoop/libexec</value>
+  </property>
+  <property>
+    <name>mapreduce.map.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/homebrew/opt/hadoop/libexec</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.env</name>
+    <value>HADOOP_MAPRED_HOME=/opt/homebrew/opt/hadoop/libexec</value>
+  </property>
+
+  <!-- Application classpath assembled from the Hadoop install rather than
+       relying on the default, which does not cover the Homebrew layout.
+
+       Note: Hive's own library directory is deliberately NOT added here. An
+       earlier attempt to append /opt/homebrew/opt/hive/libexec/lib/* made
+       Hive's MapReduce jobs fail in the containers with
+           IncompatibleClassChangeError: class
+           org.apache.log4j.bridge.LogEventAdapter overrides final method
+           org.apache.log4j.spi.LoggingEvent.getTimeStamp()
+       because Hive's log4j2 bridge jars then shadowed the log4j 1.x that
+       Hadoop's MRAppMaster expects. Hive is instead configured to execute in
+       local mode (see hive-site.xml), which uses the Hive client's own
+       classpath and avoids the conflict. -->
+  <property>
+    <name>mapreduce.application.classpath</name>
+    <value>/opt/homebrew/opt/hadoop/libexec/etc/hadoop:/opt/homebrew/opt/hadoop/libexec/share/hadoop/common/lib/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/common/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/hdfs/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/hdfs/lib/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/mapreduce/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/mapreduce/lib/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/yarn/*:/opt/homebrew/opt/hadoop/libexec/share/hadoop/yarn/lib/*</value>
+  </property>
+
+  <!-- Job history so a finished job can be inspected after the fact. -->
+  <property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>localhost:10020</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>localhost:19888</value>
+  </property>
+
+  <!-- One reducer by default; individual jobs override this in code to show
+       partitioning across reducers. -->
+  <property>
+    <name>mapreduce.job.reduces</name>
+    <value>1</value>
+  </property>
+
+  <!-- Memory requests sized for a laptop rather than a server. -->
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>1024</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>1024</value>
+  </property>
+
+  <property>
+    <name>mapreduce.task.io.sort.mb</name>
+    <value>200</value>
+  </property>
+
+  <!-- ==================================================================
+       JDK module access for the task JVMs.
+
+       JDK 17 and later enforce strong encapsulation of JDK internals, while
+       Hadoop, Hive and the Kryo serializer used to cache task configuration
+       still traverse those internals reflectively. Without these flags a job
+       aborts with, for example:
+         InaccessibleObjectException: Unable to make field private
+         java.lang.String java.util.regex.Pattern.pattern accessible:
+         module java.base does not "opens java.util.regex"
+
+       The same flag list is applied to the daemons and to the Hive and
+       Spark clients; it is defined once in code/config/jdk-opens.txt and
+       injected here by code/scripts/00_setup_env.sh between the markers
+       below, so there is a single source of truth.
+       ================================================================== -->
+  <!-- JDK-OPENS:START -->
+  <property>
+    <name>mapreduce.map.java.opts</name>
+    <value>-Xmx800m</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.java.opts</name>
+    <value>-Xmx800m</value>
+  </property>
+  <property>
+    <name>yarn.app.mapreduce.am.command-opts</name>
+    <value>-Xmx1024m</value>
+  </property>
+  <!-- JDK-OPENS:END -->
+
+</configuration>

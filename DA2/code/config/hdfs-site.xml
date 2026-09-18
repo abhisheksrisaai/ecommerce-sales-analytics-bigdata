@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  BCSE402L - Big Data Analytics (TH)
+  DA-2 artefact: HDFS configuration.
+
+  Two directories matter: the NameNode's metadata (the namespace image and
+  edit log) and the DataNode's block storage. They are kept separately so the
+  block layout that the report discusses can be inspected directly.
+-->
+<configuration>
+
+  <!-- Block size is the unit of distribution: a file is split into blocks of
+       this size, and each block becomes one map task in MapReduce. The
+       default 128 MB is larger than any single Olist CSV (largest is ~61 MB),
+       so every file lands as exactly one block on this dataset. -->
+  <property>
+    <name>dfs.blocksize</name>
+    <value>134217728</value>
+  </property>
+
+  <!-- Replication factor 1: there is only one DataNode on a pseudo-distributed
+       cluster, so a higher value would leave blocks permanently under-replicated. -->
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///Users/abhishek/bd-hadoop-data/dfs/name</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:///Users/abhishek/bd-hadoop-data/dfs/data</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>localhost:9870</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>localhost:9864</value>
+  </property>
+
+  <!-- Directory used by the NameNode to stage a pre-upgrade backup during a
+       format, and by the SecondaryNameNode for checkpoint images. -->
+  <property>
+    <name>dfs.namenode.checkpoint.dir</name>
+    <value>file:///Users/abhishek/bd-hadoop-data/dfs/namesecondary</value>
+  </property>
+
+  <!-- Keep the default of "no permission check on the local filesystem" off:
+       this is a normal single-user setup where the OS already gates access. -->
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>true</value>
+  </property>
+
+</configuration>

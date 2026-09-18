@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  BCSE402L - Big Data Analytics (TH)
+  DA-2 artefact: core Hadoop configuration for the pseudo-distributed cluster.
+
+  Pseudo-distributed means every daemon (NameNode, DataNode, ResourceManager,
+  NodeManager, HistoryServer) runs in its own JVM on this single machine, so
+  the real HDFS and YARN code paths and configuration files are exercised
+  rather than a local-mode simulation.
+-->
+<configuration>
+
+  <!-- Default filesystem. Port 9000 is the conventional NameNode RPC port;
+       every `hdfs dfs` command resolves to this URI. -->
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://localhost:9000</value>
+  </property>
+
+  <!-- Base directory for all other Hadoop runtime data. Kept outside the
+       Homebrew prefix so `brew upgrade` cannot wipe cluster state. -->
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/Users/abhishek/bd-hadoop-data/tmp</value>
+  </property>
+
+  <!-- Allows the local user to act as any Hadoop user; needed because the
+       macOS account name does not always match the superuser name Hadoop
+       expects when running client commands. -->
+  <property>
+    <name>hadoop.proxyuser.abhishek.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.abhishek.groups</name>
+    <value>*</value>
+  </property>
+
+</configuration>

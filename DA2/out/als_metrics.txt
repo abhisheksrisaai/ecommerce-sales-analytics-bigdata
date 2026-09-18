@@ -1,0 +1,14 @@
+rank=10
+maxIter=10
+regParam=0.1
+min_items_per_user=3
+total_pairs_all_customers=99785
+total_customers_all=93358
+total_products=32216
+model_pairs=2613
+model_customers=760
+train_rows=2104
+test_rows=509
+rmse=0.9702
+baseline_rmse=0.9324
+improvement_pct=-4.05

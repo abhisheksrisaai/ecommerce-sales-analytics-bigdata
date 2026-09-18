@@ -1,0 +1,128 @@
+=== MONGODB VERSION ===
+db version v8.3.11
+Build Info: {
+    "version": "8.3.11",
+
+=== STARTING MONGOD (dbpath /Users/abhishek/bd-hadoop-data/mongodb) ===
+mongod: 1
+
+=== LOADING RECOMMENDATIONS AND RUNNING NOSQL QUERIES ===
+connected to MongoDB at mongodb://localhost:27017, database 'olist_analytics'
+recommendations collection: 500 documents inserted
+category_stats collection: 74 documents inserted
+
+==============================================================================
+Q1. One document read: recommendations for a single customer
+==============================================================================
+customer: 0097fca0db567f5ca79509b7b4fc1c2d
+  rank  1  0de59eddc63167215c972b0d785ffa7b  score=2.897
+  rank  2  fe31b2791161c24e921f90788d443e1c  score=2.8837
+  rank  3  2e511b5741ab14e7f5294df6f1310b03  score=2.7433
+  rank  4  8bb27b1d96be90b36b8d0c7f30931d52  score=2.727
+  rank  5  b8c2cf7e813b0eb7ec62f7459217b22c  score=2.6629
+
+==============================================================================
+Q2. Aggregation pipeline: how many customers, average list length
+==============================================================================
+{'customers': 500, 'total_recommendations': 5000, 'avg_recommendations': 10.0}
+
+==============================================================================
+Q3. Aggregation pipeline: top categories by revenue
+==============================================================================
+  health_beauty                revenue=1,412,089.53  items=  9,465  review=4.19
+  watches_gifts                revenue=1,264,333.12  items=  5,859  review=4.07
+  bed_bath_table               revenue=1,225,209.26  items= 10,953  review=3.92
+  sports_leisure               revenue=1,118,256.91  items=  8,431  review=4.17
+  computers_accessories        revenue=1,032,723.77  items=  7,644  review=3.99
+
+==============================================================================
+Q4. Multikey index query: which customers are recommended a product?
+==============================================================================
+product 0de59eddc63167215c972b0d785ffa7b appears in 88 customer recommendation lists
+  customer 0097fca0db567f5ca79509b7b4fc1c2d: rank=1 score=2.897
+  customer 01a22e2079ea71e17313b88e5811e54a: rank=2 score=2.692
+  customer 07b1b60bca2b6326fa2adb259ea4a55f: rank=9 score=2.734
+
+==============================================================================
+Q5. High-confidence recommendations (score filter)
+==============================================================================
+  product 8bb27b1d96be90b36b8d0c7f30931d52  customers=   39  avg_score=4.578
+  product a03e401d58a45187271718c5d7610422  customers=   26  avg_score=4.421
+  product 00faa46f36261af8bbf3a4d37fa4841b  customers=   24  avg_score=4.493
+  product 90b58782fdd04cb829667fcc41fb65f5  customers=   17  avg_score=4.479
+  product 2e511b5741ab14e7f5294df6f1310b03  customers=   16  avg_score=4.448
+
+==============================================================================
+Collections in 'olist_analytics': ['recommendations', 'category_stats']
+Indexes on recommendations:
+  _id_: [('_id', 1)]
+  recommendations.product_id_1: [('recommendations.product_id', 1)]
+==============================================================================
+
+=== SERVER-SIDE VIEW (mongosh) ===
+collections: recommendations,category_stats
+recommendation docs: 500
+sample document:
+{
+  _id: '0097fca0db567f5ca79509b7b4fc1c2d',
+  recommendations: [
+    {
+      product_id: '0de59eddc63167215c972b0d785ffa7b',
+      score: 2.897,
+      rank: 1
+    },
+    {
+      product_id: 'fe31b2791161c24e921f90788d443e1c',
+      score: 2.8837,
+      rank: 2
+    },
+    {
+      product_id: '2e511b5741ab14e7f5294df6f1310b03',
+      score: 2.7433,
+      rank: 3
+    },
+    {
+      product_id: '8bb27b1d96be90b36b8d0c7f30931d52',
+      score: 2.727,
+      rank: 4
+    },
+    {
+      product_id: 'b8c2cf7e813b0eb7ec62f7459217b22c',
+      score: 2.6629,
+      rank: 5
+    },
+    {
+      product_id: '6b6b162b177d0f36987993aecbe1c65f',
+      score: 2.6502,
+      rank: 6
+    },
+    {
+      product_id: '41da75141264c3bde21ecea85a4cb8b7',
+      score: 2.6154,
+      rank: 7
+    },
+    {
+      product_id: '90b58782fdd04cb829667fcc41fb65f5',
+      score: 2.5811,
+      rank: 8
+    },
+    {
+      product_id: 'a03e401d58a45187271718c5d7610422',
+      score: 2.5162,
+      rank: 9
+    },
+    {
+      product_id: '308e4e21ae228a10f6370a243ae59995',
+      score: 2.495,
+      rank: 10
+    }
+  ],
+  n_recommendations: 10,
+  generated_at: ISODate('2026-09-16T11:12:38.684Z'),
+  model: 'ALS rank=10 regParam=0.1'
+
+=== MONGODB DATA SIZE ON DISK ===
+620K	/Users/abhishek/bd-hadoop-data/mongodb
+started_here=1
+MONGO_EXIT=0
+__DONE__

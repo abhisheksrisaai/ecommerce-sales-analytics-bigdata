@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  BCSE402L - Big Data Analytics (TH)
+  DA-2 artefact: Hive configuration.
+
+  Hive stores the table and partition definitions in a "metastore" and keeps
+  the actual data in HDFS. On a single-node setup the metastore runs embedded
+  in the Hive client process using Apache Derby, so no extra database server
+  is required.
+-->
+<configuration>
+
+  <!-- HDFS directory where managed-table data lives. Partitions become
+       subdirectories here, which is what makes partition pruning possible. -->
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+  </property>
+
+  <!-- Embedded Derby metastore: jdbc:derby:;databaseName=<path>;create=true
+       creates the schema on first run and reuses it afterwards. -->
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:derby:;databaseName=/Users/abhishek/bd-hadoop-data/hive/metastore_db;create=true</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+  </property>
+
+  <!-- Skip the strict schema-version check so the embedded metastore can be
+       created automatically the first time Hive starts. -->
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>datanucleus.schema.autoCreateAll</name>
+    <value>true</value>
+  </property>
+
+  <!-- Let Hive run its own metastore and warehouse locally rather than
+       expecting a separate metastore service. -->
+  <property>
+    <name>hive.metastore.uris</name>
+    <value></value>
+  </property>
+
+  <!-- Query execution engine. MapReduce is the classic course-relevant
+       engine and needs no extra service; Hive would otherwise need Tez. -->
+  <property>
+    <name>hive.execution.engine</name>
+    <value>mr</value>
+  </property>
+
+  <!-- Do not answer aggregates from stored table statistics.
+
+       When Hive creates a table it records a numRows statistic from the raw
+       file line count, which includes the header line that skip.header.line.count
+       removes at read time. COUNT(*) was therefore answered from that statistic
+       and returned 99,442 for a table that actually holds 99,441 rows, one more
+       than the source CSV. Computing the aggregate from the data keeps reported
+       numbers exact; the slight extra cost is irrelevant at this scale. -->
+  <property>
+    <name>hive.compute.query.using.stats</name>
+    <value>false</value>
+  </property>
+
+  <!-- Query execution runs locally rather than through YARN.
+
+       Hive 4.2.1 on Hadoop 3.5.0 cannot use YARN containers for its tasks in
+       this environment: a container started with Hive's runtime jars on the
+       classpath aborts with
+         IncompatibleClassChangeError: class
+         org.apache.log4j.bridge.LogEventAdapter overrides final method
+         org.apache.log4j.spi.LoggingEvent.getTimeStamp()
+       because Hive's log4j2 bridge shadows the log4j 1.x that Hadoop's
+       MRAppMaster requires.
+
+       Local mode executes the same MapReduce plan inside the Hive client's
+       own JVM, whose classpath is assembled by the Hive launcher and is
+       therefore consistent. The tables, partitions and data all remain in
+       HDFS (/olist/raw and /user/hive/warehouse); only the execution engine
+       is local. The standalone MapReduce jobs in code/mr do run on YARN and
+       are the cluster-mode evidence for this project. -->
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>local</value>
+  </property>
+  <property>
+    <name>hive.exec.mode.local.auto</name>
+    <value>true</value>
+  </property>
+  <!-- Input size ceiling for local execution. The default (128 MB) covers the
+       largest Olist file, so the warehouse insert and analytics run locally
+       instead of being escalated to a cluster job. -->
+  <property>
+    <name>hive.exec.mode.local.auto.inputbytes.max</name>
+    <value>1073741824</value>
+  </property>
+  <property>
+    <name>hive.exec.mode.local.auto.input.files.max</name>
+    <value>64</value>
+  </property>
+  <property>
+    <name>hive.exec.mode.local.auto.tasks.max</name>
+    <value>16</value>
+  </property>
+
+  <!-- Dynamic partitioning makes the INSERT in 01_warehouse.hql write one
+       directory per year-month automatically. -->
+  <property>
+    <name>hive.exec.dynamic.partition</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.exec.dynamic.partition.mode</name>
+    <value>nonstrict</value>
+  </property>
+
+  <!-- Table statistics gathering is disabled.
+
+       The embedded Derby metastore was created before Hive 4's column-level
+       statistics tables exist, so enabling autogather made every write end
+       with
+         MetaException: Unable to update Column stats for orders_partitioned
+         due to: Table/View 'PART_COL_STATS' does not exist.
+       The data itself was written correctly; only the statistics bookkeeping
+       failed. Since aggregates are computed from the data anyway
+       (hive.compute.query.using.stats=false), statistics are simply not
+       gathered here. -->
+  <property>
+    <name>hive.stats.autogather</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>hive.stats.column.autogather</name>
+    <value>false</value>
+  </property>
+
+  <!-- Map-side join conversion is disabled.
+
+       Hive's default is to convert a join to a map-side join when one side is
+       small enough, loading that side into an in-memory hash table. In this
+       local execution mode that code path fails: the forked task JVM dies
+       while building its JobConf, and the query ends with
+         FAILED: Execution Error, return code 1 from
+         org.apache.hadoop.hive.ql.exec.mr.MapredLocalTask
+       Turning the conversion off makes Hive use a regular reduce-side join,
+       which runs correctly here. The observable difference is execution
+       strategy and speed, not the result; join semantics are unchanged. -->
+  <property>
+    <name>hive.auto.convert.join</name>
+    <value>false</value>
+  </property>
+
+  <!-- Sensible single-machine limits. -->
+  <property>
+    <name>hive.exec.max.dynamic.partitions</name>
+    <value>2000</value>
+  </property>
+  <property>
+    <name>hive.exec.max.dynamic.partitions.pernode</name>
+    <value>500</value>
+  </property>
+
+</configuration>

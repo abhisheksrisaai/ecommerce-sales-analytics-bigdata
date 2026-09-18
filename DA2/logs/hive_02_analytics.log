@@ -1,0 +1,736 @@
+=== [1/11] (session database -> olist)
+
+=== [2/11] SELECT substr(o.order_purchase_timestamp, 1, 7) AS year_month, count(DISTINCT o.order_id) AS orders, round(sum
++-------------+---------+-------------+
+| year_month  | orders  |     gmv     |
++-------------+---------+-------------+
+| 2016-09     | 1       | 143.46      |
+| 2016-10     | 265     | 46490.66    |
+| 2016-12     | 1       | 19.62       |
+| 2017-01     | 750     | 127482.37   |
+| 2017-02     | 1653    | 271239.32   |
+| 2017-03     | 2546    | 414330.95   |
+| 2017-04     | 2303    | 390812.4    |
+| 2017-05     | 3546    | 566851.4    |
+| 2017-06     | 3135    | 490050.37   |
+| 2017-07     | 3872    | 566299.08   |
+| 2017-08     | 4193    | 645832.36   |
+| 2017-09     | 4150    | 701077.49   |
+| 2017-10     | 4478    | 751117.01   |
+| 2017-11     | 7289    | 1153364.2   |
+| 2017-12     | 5513    | 843078.29   |
+| 2018-01     | 7069    | 1077887.46  |
+| 2018-02     | 6555    | 966168.41   |
+| 2018-03     | 7003    | 1120598.24  |
+| 2018-04     | 6798    | 1132878.93  |
+| 2018-05     | 6749    | 1128774.52  |
+| 2018-06     | 6099    | 1011978.29  |
+| 2018-07     | 6159    | 1027807.28  |
+| 2018-08     | 6351    | 985491.64   |
++-------------+---------+-------------+
+No Stats for olist@orders, Columns: order_status, order_purchase_timestamp, order_id
+No Stats for olist@order_items, Columns: price, order_id, freight_value
+Query ID = abhishek_20260916170143_2f34f3c0-375e-4db3-8ff7-4cc4380a1f59
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:46,378 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:01:47,389 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local814525310_0001
+Launching Job 2 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:48,673 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local570326654_0002
+Launching Job 3 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:49,947 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1910997745_0003
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 82235172 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 64828454 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 64828454 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [3/11] SELECT coalesce(t.product_category_name_english, p.product_category_name, 'unknown') AS category, count(*) AS 
++------------------------+-------------+-------------+-----------------+
+|        category        | items_sold  |   revenue   | avg_item_price  |
++------------------------+-------------+-------------+-----------------+
+| health_beauty          | 9465        | 1412089.53  | 130.28          |
+| watches_gifts          | 5859        | 1264333.12  | 199.04          |
+| bed_bath_table         | 10953       | 1225209.26  | 93.44           |
+| sports_leisure         | 8431        | 1118256.91  | 113.25          |
+| computers_accessories  | 7644        | 1032723.77  | 116.26          |
+| furniture_decor        | 8160        | 880329.92   | 87.25           |
+| housewares             | 6795        | 758392.25   | 90.6            |
+| cool_stuff             | 3718        | 691680.89   | 164.12          |
+| auto                   | 4140        | 669454.75   | 139.85          |
+| garden_tools           | 4268        | 567145.68   | 110.24          |
+| toys                   | 4030        | 547061.06   | 116.94          |
+| baby                   | 2982        | 466727.65   | 134.28          |
+| perfumery              | 3340        | 443171.63   | 116.81          |
+| telephony              | 4430        | 379202.62   | 69.95           |
+| office_furniture       | 1668        | 335211.36   | 160.76          |
++------------------------+-------------+-------------+-----------------+
+No Stats for olist@orders, Columns: order_status, order_id
+No Stats for olist@order_items, Columns: price, product_id, order_id, freight_value
+No Stats for olist@products, Columns: product_category_name, product_id
+No Stats for olist@category_translation, Columns: product_category_name, product_category_name_english
+Query ID = abhishek_20260916170153_3cc62271-1ef0-4511-8919-08a3150300da
+Total jobs = 5
+Launching Job 1 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:55,895 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:01:56,902 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local24230458_0001
+Launching Job 2 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:58,174 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local1179934848_0002
+Launching Job 3 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:59,447 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1253209044_0003
+Launching Job 4 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:00,718 Stage-4 map = 100%,  reduce = 100%
+Ended Job = job_local1148189561_0004
+Launching Job 5 out of 5
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:01,970 Stage-5 map = 100%,  reduce = 100%
+Ended Job = job_local1036967499_0005
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 82235172 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 101918927 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 104262026 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-4:  HDFS Read: 69509676 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-5:  HDFS Read: 69509676 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [4/11] SELECT c.customer_state, count(DISTINCT o.order_id) AS orders, round(sum(oi.price + oi.freight_value), 2) AS r
++-------------------+---------+-------------+------------------+
+| c.customer_state  | orders  |   revenue   | avg_order_value  |
++-------------------+---------+-------------+------------------+
+| SP                | 40501   | 5769703.15  | 142.46           |
+| RJ                | 12350   | 2055401.57  | 166.43           |
+| MG                | 11354   | 1818891.67  | 160.2            |
+| RS                | 5345    | 861472.79   | 161.17           |
+| PR                | 4923    | 781708.8    | 158.79           |
+| SC                | 3546    | 595127.78   | 167.83           |
+| BA                | 3256    | 591137.81   | 181.55           |
+| DF                | 2080    | 346123.35   | 166.41           |
+| GO                | 1957    | 334212.35   | 170.78           |
+| ES                | 1995    | 317657.93   | 159.23           |
+| PE                | 1593    | 308972.05   | 193.96           |
+| CE                | 1279    | 266436.77   | 208.32           |
++-------------------+---------+-------------+------------------+
+No Stats for olist@orders, Columns: order_status, customer_id, order_id
+No Stats for olist@customers, Columns: customer_state, customer_id
+No Stats for olist@order_items, Columns: price, order_id, freight_value
+Query ID = abhishek_20260916170205_ae7fb9f3-413f-423d-8e17-68e75587a3d7
+Total jobs = 4
+Launching Job 1 out of 4
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:07,981 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:02:08,992 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1732089213_0001
+Launching Job 2 out of 4
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:10,287 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local1601210059_0002
+Launching Job 3 out of 4
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:11,555 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local747461509_0003
+Launching Job 4 out of 4
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:12,830 Stage-4 map = 100%,  reduce = 100%
+Ended Job = job_local1851507401_0004
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 69392514 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 123001221 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 82000814 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-4:  HDFS Read: 82000814 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [5/11] SELECT payment_type, count(*) AS transactions, round(sum(payment_value), 2) AS total_value, round(avg(payment_
++---------------+---------------+----------------+------------+-------------------+
+| payment_type  | transactions  |  total_value   | avg_value  | avg_installments  |
++---------------+---------------+----------------+------------+-------------------+
+| credit_card   | 76795         | 1.254208419E7  | 163.32     | 3.51              |
+| boleto        | 19784         | 2869361.27     | 145.03     | 1.0               |
+| voucher       | 5775          | 379436.87      | 65.7       | 1.0               |
+| debit_card    | 1529          | 217989.79      | 142.57     | 1.0               |
+| not_defined   | 3             | 0.0            | 0.0        | 1.0               |
++---------------+---------------+----------------+------------+-------------------+
+No Stats for olist@payments, Columns: payment_type, payment_installments, payment_value
+Query ID = abhishek_20260916170216_2f52e5ab-ee6d-45ca-ba73-8f687761c18d
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:19,150 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1773427028_0001
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:20,438 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local2000112563_0002
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 11295408 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 11295408 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [6/11] SELECT c.customer_state, count(*) AS delivered_orders, round(avg(datediff(o.order_delivered_customer_date, o.o
++-------------------+-------------------+--------------------+--------------+-----------+
+| c.customer_state  | delivered_orders  | avg_delivery_days  | late_orders  | late_pct  |
++-------------------+-------------------+--------------------+--------------+-----------+
+| MA                | 717               | 21.5               | 141          | 19.67     |
+| CE                | 1279              | 21.2               | 196          | 15.32     |
+| BA                | 3256              | 19.3               | 457          | 14.04     |
+| RJ                | 12350             | 15.2               | 1664         | 13.47     |
+| PA                | 946               | 23.7               | 117          | 12.37     |
+| ES                | 1995              | 15.7               | 244          | 12.23     |
+| MS                | 701               | 15.5               | 81           | 11.55     |
+| PB                | 517               | 20.4               | 57           | 11.03     |
+| PE                | 1593              | 18.4               | 172          | 10.80     |
+| SC                | 3546              | 14.9               | 346          | 9.76      |
+| GO                | 1957              | 15.5               | 160          | 8.18      |
+| RS                | 5344              | 15.2               | 382          | 7.15      |
++-------------------+-------------------+--------------------+--------------+-----------+
+No Stats for olist@orders, Columns: order_status, order_delivered_customer_date, order_purchase_timestamp, order_estimated_delivery_date, customer_id
+No Stats for olist@customers, Columns: customer_state, customer_id
+Query ID = abhishek_20260916170224_104824a4-4ca5-4314-8cab-14c962f271db
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:27,246 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:02:28,252 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1863919617_0001
+Launching Job 2 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:29,539 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local957366752_0002
+Launching Job 3 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:30,811 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1859090290_0003
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 69392514 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 51985796 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 51985796 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [7/11] SELECT count(*) AS total_customers, sum(CASE WHEN order_count > 1 THEN 1 ELSE 0 END) AS repeat_customers, roun
++------------------+-------------------+------------------+
+| total_customers  | repeat_customers  | repeat_rate_pct  |
++------------------+-------------------+------------------+
+| 93358            | 2801              | 3.00             |
++------------------+-------------------+------------------+
+No Stats for olist@orders, Columns: order_status, customer_id, order_id
+No Stats for olist@customers, Columns: customer_unique_id, customer_id
+Query ID = abhishek_20260916170234_7a5adf5e-4ded-404f-aff3-8b447a44357a
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:37,310 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:02:38,319 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1791633980_0001
+Launching Job 2 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:39,606 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local156010753_0002
+Launching Job 3 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:40,875 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local833713604_0003
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 69392514 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 51985796 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 51985796 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [8/11] SELECT review_score, count(*) AS reviews, round(100.0 * count(*) / sum(count(*)) OVER (), 2) AS pct FROM revie
++---------------+----------+--------+
+| review_score  | reviews  |  pct   |
++---------------+----------+--------+
+| 1             | 11424    | 11.51  |
+| 2             | 3151     | 3.18   |
+| 3             | 8179     | 8.24   |
+| 4             | 19142    | 19.29  |
+| 5             | 57328    | 57.78  |
++---------------+----------+--------+
+No Stats for olist@reviews, Columns: review_score
+Query ID = abhishek_20260916170244_86489f2a-833b-4f1f-81b4-95788ebd3d61
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:47,707 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1830374956_0001
+Launching Job 2 out of 3
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:49,001 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local888268880_0002
+Launching Job 3 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:50,271 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1838670197_0003
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 27890160 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 27890160 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 27890160 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [9/11] SELECT coalesce(t.product_category_name_english, p.product_category_name, 'unknown') AS category, round(avg(r.
++---------------------------+-------------------+-----------------+
+|         category          | avg_review_score  | items_reviewed  |
++---------------------------+-------------------+-----------------+
+| books_general_interest    | 4.45              | 549             |
+| luggage_accessories       | 4.32              | 1088            |
+| food                      | 4.22              | 495             |
+| stationery                | 4.19              | 2507            |
+| pet_shop                  | 4.19              | 1939            |
+| home_appliances           | 4.17              | 806             |
+| perfumery                 | 4.16              | 3421            |
+| toys                      | 4.16              | 4091            |
+| cool_stuff                | 4.15              | 3772            |
+| musical_instruments       | 4.15              | 675             |
+| small_appliances          | 4.15              | 677             |
+| health_beauty             | 4.14              | 9645            |
+| fashion_bags_accessories  | 4.14              | 2039            |
+| sports_leisure            | 4.11              | 8640            |
+| auto                      | 4.07              | 4213            |
++---------------------------+-------------------+-----------------+
+No Stats for olist@order_items, Columns: product_id, order_id
+No Stats for olist@products, Columns: product_category_name, product_id
+No Stats for olist@category_translation, Columns: product_category_name, product_category_name_english
+No Stats for olist@reviews, Columns: review_score, order_id
+Query ID = abhishek_20260916170253_25812fbc-9192-428e-81e8-bdcdb4674a5c
+Total jobs = 5
+Launching Job 1 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:57,218 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1387537869_0001
+Launching Job 2 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:58,524 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local1909618627_0002
+Launching Job 3 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:02:59,798 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1281583866_0003
+Launching Job 4 out of 5
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:01,061 Stage-4 map = 100%,  reduce = 100%
+Ended Job = job_local984138415_0004
+Launching Job 5 out of 5
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:02,316 Stage-5 map = 100%,  reduce = 100%
+Ended Job = job_local1083004433_0005
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 7019345 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 52044360 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 93879600 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-4:  HDFS Read: 62586400 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-5:  HDFS Read: 62586400 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [10/11] SELECT year_month, category, revenue, rn FROM ( SELECT substr(o.order_purchase_timestamp, 1, 7) AS year_month,
++-------------+---------------------------+------------+-----+
+| year_month  |         category          |  revenue   | rn  |
++-------------+---------------------------+------------+-----+
+| 2016-09     | health_beauty             | 143.46     | 1   |
+| 2016-10     | furniture_decor           | 6899.35    | 1   |
+| 2016-10     | perfumery                 | 5315.2     | 2   |
+| 2016-10     | toys                      | 4591.53    | 3   |
+| 2016-10     | health_beauty             | 4186.29    | 4   |
+| 2016-10     | consoles_games            | 3785.36    | 5   |
+| 2016-12     | fashion_bags_accessories  | 19.62      | 1   |
+| 2017-01     | furniture_decor           | 15863.93   | 1   |
+| 2017-01     | health_beauty             | 13802.8    | 2   |
+| 2017-01     | sports_leisure            | 10754.95   | 3   |
+| 2017-01     | garden_tools              | 8448.34    | 4   |
+| 2017-01     | watches_gifts             | 8310.83    | 5   |
+| 2017-02     | health_beauty             | 25178.32   | 1   |
+| 2017-02     | furniture_decor           | 25010.2    | 2   |
+| 2017-02     | sports_leisure            | 18519.89   | 3   |
+| 2017-02     | bed_bath_table            | 18462.71   | 4   |
+| 2017-02     | auto                      | 14301.63   | 5   |
+| 2017-03     | computers_accessories     | 31286.73   | 1   |
+| 2017-03     | bed_bath_table            | 29856.01   | 2   |
+| 2017-03     | health_beauty             | 29463.99   | 3   |
+| 2017-03     | sports_leisure            | 29343.27   | 4   |
+| 2017-03     | furniture_decor           | 27790.38   | 5   |
+| 2017-04     | bed_bath_table            | 28700.38   | 1   |
+| 2017-04     | sports_leisure            | 26977.69   | 2   |
+| 2017-04     | health_beauty             | 25454.2    | 3   |
+| 2017-04     | watches_gifts             | 24958.48   | 4   |
+| 2017-04     | small_appliances          | 23918.29   | 5   |
+| 2017-05     | health_beauty             | 52254.72   | 1   |
+| 2017-05     | computers_accessories     | 50303.12   | 2   |
+| 2017-05     | sports_leisure            | 39947.95   | 3   |
+| 2017-05     | watches_gifts             | 38924.38   | 4   |
+| 2017-05     | bed_bath_table            | 38920.54   | 5   |
+| 2017-06     | cool_stuff                | 42539.56   | 1   |
+| 2017-06     | computers_accessories     | 40687.6    | 2   |
+| 2017-06     | bed_bath_table            | 40132.47   | 3   |
+| 2017-06     | sports_leisure            | 38027.74   | 4   |
+| 2017-06     | health_beauty             | 36844.86   | 5   |
+| 2017-07     | bed_bath_table            | 73336.34   | 1   |
+| 2017-07     | computers_accessories     | 43948.83   | 2   |
+| 2017-07     | sports_leisure            | 43896.84   | 3   |
+| 2017-07     | cool_stuff                | 41429.43   | 4   |
+| 2017-07     | health_beauty             | 39593.71   | 5   |
+| 2017-08     | bed_bath_table            | 65628.16   | 1   |
+| 2017-08     | health_beauty             | 55281.78   | 2   |
+| 2017-08     | sports_leisure            | 48309.09   | 3   |
+| 2017-08     | cool_stuff                | 43552.61   | 4   |
+| 2017-08     | furniture_decor           | 41805.88   | 5   |
+| 2017-09     | bed_bath_table            | 61723.02   | 1   |
+| 2017-09     | health_beauty             | 58123.19   | 2   |
+| 2017-09     | sports_leisure            | 57463.77   | 3   |
+| 2017-09     | computers                 | 52948.15   | 4   |
+| 2017-09     | watches_gifts             | 48992.89   | 5   |
+| 2017-10     | watches_gifts             | 69770.94   | 1   |
+| 2017-10     | sports_leisure            | 56797.18   | 2   |
+| 2017-10     | bed_bath_table            | 55209.9    | 3   |
+| 2017-10     | cool_stuff                | 50525.41   | 4   |
+| 2017-10     | computers_accessories     | 48090.44   | 5   |
+| 2017-11     | bed_bath_table            | 104963.58  | 1   |
+| 2017-11     | watches_gifts             | 103135.3   | 2   |
+| 2017-11     | health_beauty             | 88629.8    | 3   |
++-------------+---------------------------+------------+-----+
+No Stats for olist@orders, Columns: order_status, order_purchase_timestamp, order_id
+No Stats for olist@order_items, Columns: price, product_id, order_id, freight_value
+No Stats for olist@products, Columns: product_category_name, product_id
+No Stats for olist@category_translation, Columns: product_category_name, product_category_name_english
+Query ID = abhishek_20260916170305_73787092-5bb8-4c3e-9f53-088664d3ad81
+Total jobs = 6
+Launching Job 1 out of 6
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:09,278 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:03:10,286 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1816797861_0001
+Launching Job 2 out of 6
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:11,564 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local386560554_0002
+Launching Job 3 out of 6
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:12,840 Stage-3 map = 100%,  reduce = 100%
+Ended Job = job_local1594837347_0003
+Launching Job 4 out of 6
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:14,106 Stage-4 map = 100%,  reduce = 100%
+Ended Job = job_local1317505421_0004
+Launching Job 5 out of 6
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:15,368 Stage-5 map = 100%,  reduce = 100%
+Ended Job = job_local226535298_0005
+Launching Job 6 out of 6
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:16,638 Stage-6 map = 100%,  reduce = 100%
+Ended Job = job_local695764330_0006
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 82235172 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 101918927 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-3:  HDFS Read: 104262026 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-4:  HDFS Read: 69509676 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-5:  HDFS Read: 69509676 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-6:  HDFS Read: 69509676 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [11/11] SELECT hour(order_purchase_timestamp) AS purchase_hour, count(*) AS orders FROM orders_partitioned WHERE purch
++----------------+---------+
+| purchase_hour  | orders  |
++----------------+---------+
+| 0              | 2317    |
+| 1              | 1132    |
+| 2              | 492     |
+| 3              | 259     |
+| 4              | 200     |
+| 5              | 182     |
+| 6              | 478     |
+| 7              | 1194    |
+| 8              | 2896    |
+| 9              | 4633    |
+| 10             | 5957    |
+| 11             | 6367    |
+| 12             | 5787    |
+| 13             | 6293    |
+| 14             | 6368    |
+| 15             | 6227    |
+| 16             | 6460    |
+| 17             | 5948    |
+| 18             | 5575    |
+| 19             | 5792    |
+| 20             | 5996    |
+| 21             | 6027    |
+| 22             | 5630    |
+| 23             | 4001    |
++----------------+---------+
+No Stats for olist@orders_partitioned, Columns: order_purchase_timestamp
+Query ID = abhishek_20260916170319_69cd6357-738c-4a86-8177-2eb81093703b
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:23,093 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local756145423_0001
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:03:24,438 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local1592748165_0002
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 4480548 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 4480548 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+

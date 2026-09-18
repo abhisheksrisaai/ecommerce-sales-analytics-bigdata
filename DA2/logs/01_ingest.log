@@ -1,0 +1,97 @@
+=== HDFS INGESTION: /Users/abhishek/Documents/projects/BD PROJECT/DA2/data/raw -> /olist/raw ===
+2026-09-16 16:16:51,403 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+ENTITY                 SOURCE                                               BYTES  STATUS
+------------------------------------------------------------------------------
+2026-09-16 16:16:51,821 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+customers              olist_customers_dataset.csv                        9033957  stored
+2026-09-16 16:16:52,794 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+orders                 olist_orders_dataset.csv                          17654914  stored
+2026-09-16 16:16:53,938 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+order_items            olist_order_items_dataset.csv                     15438671  stored
+2026-09-16 16:16:55,158 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+payments               olist_order_payments_dataset.csv                   5777138  stored
+2026-09-16 16:16:56,293 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+reviews                olist_order_reviews_dataset.csv                   14451670  stored
+2026-09-16 16:16:57,386 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+products               olist_products_dataset.csv                         2379446  stored
+2026-09-16 16:16:58,477 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+sellers                olist_sellers_dataset.csv                           174703  stored
+2026-09-16 16:16:59,596 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+geolocation            olist_geolocation_dataset.csv                     61273883  stored
+2026-09-16 16:17:00,772 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+category_translation   product_category_name_translation.csv                 2613  stored
+
+=== LANDING ZONE CONTENTS ===
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:17 /olist/raw/category_translation
+-rw-r--r--   1 abhishek supergroup       2613 2026-09-16 16:17 /olist/raw/category_translation/product_category_name_translation.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/customers
+-rw-r--r--   1 abhishek supergroup    9033957 2026-09-16 16:16 /olist/raw/customers/olist_customers_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:17 /olist/raw/geolocation
+-rw-r--r--   1 abhishek supergroup   61273883 2026-09-16 16:17 /olist/raw/geolocation/olist_geolocation_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/order_items
+-rw-r--r--   1 abhishek supergroup   15438671 2026-09-16 16:16 /olist/raw/order_items/olist_order_items_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/orders
+-rw-r--r--   1 abhishek supergroup   17654914 2026-09-16 16:16 /olist/raw/orders/olist_orders_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/payments
+-rw-r--r--   1 abhishek supergroup    5777138 2026-09-16 16:16 /olist/raw/payments/olist_order_payments_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/products
+-rw-r--r--   1 abhishek supergroup    2379446 2026-09-16 16:16 /olist/raw/products/olist_products_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/reviews
+-rw-r--r--   1 abhishek supergroup   14451670 2026-09-16 16:16 /olist/raw/reviews/olist_order_reviews_dataset.csv
+drwxr-xr-x   - abhishek supergroup          0 2026-09-16 16:16 /olist/raw/sellers
+-rw-r--r--   1 abhishek supergroup     174703 2026-09-16 16:16 /olist/raw/sellers/olist_sellers_dataset.csv
+
+=== BUILDING THE CLEAN LAYER (header removed, records normalised) ===
+The clean layer fixes two concrete problems that break Hive reads:
+  1. Hive 4.2.1's OpenCSVSerde does not honour skip.header.line.count, so a
+     header left in place is read as a data row and inflates every count.
+  2. olist_order_reviews_dataset.csv embeds newlines inside quoted comment
+     fields. Hive reads one line per record, so those rows fail with
+     CsvMalformedLineException: Unterminated quoted field at end of CSV line.
+/olist/raw keeps the files exactly as downloaded; /olist/clean holds the
+same records, re-serialised by a real CSV parser onto one line each.
+
+ENTITY                    RAW_LINES  CLEAN_LINES STATUS
+------------------------------------------------------------------------------
+customers                     99442        99441 stored
+orders                        99442        99441 stored
+order_items                  112651       112650 stored
+payments                     103887       103886 stored
+reviews                      104720        99224 stored
+products                      32952        32951 stored
+sellers                        3096         3095 stored
+geolocation                 1000164      1000163 stored
+category_translation             71           71 stored
+
+=== TOTAL SIZE IN HDFS ===
+raw   : 120.3 M  120.3 M  /olist/raw
+clean : 116.7 M  116.7 M  /olist/clean
+
+=== BLOCK LAYOUT (splits and replication) ===
+/olist/raw <dir>
+/olist/raw/category_translation <dir>
+/olist/raw/category_translation/product_category_name_translation.csv 2613 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/customers <dir>
+/olist/raw/customers/olist_customers_dataset.csv 9033957 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/geolocation <dir>
+/olist/raw/geolocation/olist_geolocation_dataset.csv 61273883 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/order_items <dir>
+/olist/raw/order_items/olist_order_items_dataset.csv 15438671 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/orders <dir>
+/olist/raw/orders/olist_orders_dataset.csv 17654914 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/payments <dir>
+/olist/raw/payments/olist_order_payments_dataset.csv 5777138 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/products <dir>
+/olist/raw/products/olist_products_dataset.csv 2379446 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/reviews <dir>
+/olist/raw/reviews/olist_order_reviews_dataset.csv 14451670 bytes, replicated: replication=1, 1 block(s):  OK
+/olist/raw/sellers <dir>
+/olist/raw/sellers/olist_sellers_dataset.csv 174703 bytes, replicated: replication=1, 1 block(s):  OK
+Status: HEALTHY
+ Total blocks (validated):	9 (avg. block size 14020777 B)
+ Average block replication:	1.0
+ Average block group size:	0.0
+
+=== NAMESPACE QUOTA / COUNTS ===
+        none             inf            none             inf           10            9          126186995 /olist/raw

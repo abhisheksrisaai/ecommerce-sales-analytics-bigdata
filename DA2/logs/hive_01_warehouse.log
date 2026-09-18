@@ -1,0 +1,124 @@
+=== [1/24] CREATE DATABASE IF NOT EXISTS olist COMMENT 'Olist Brazilian e-commerce warehouse (HDFS backed)' LOCATION '/us
+(no output)
+
+=== [2/24] (session database -> olist)
+
+=== [3/24] DROP TABLE IF EXISTS customers
+(no output)
+
+=== [4/24] CREATE EXTERNAL TABLE customers ( customer_id STRING, customer_unique_id STRING, customer_zip_code_prefix STRI
+(no output)
+
+=== [5/24] DROP TABLE IF EXISTS orders
+(no output)
+
+=== [6/24] CREATE EXTERNAL TABLE orders ( order_id STRING, customer_id STRING, order_status STRING, order_purchase_timest
+(no output)
+
+=== [7/24] DROP TABLE IF EXISTS order_items
+(no output)
+
+=== [8/24] CREATE EXTERNAL TABLE order_items ( order_id STRING, order_item_id INT, product_id STRING, seller_id STRING, s
+(no output)
+
+=== [9/24] DROP TABLE IF EXISTS payments
+(no output)
+
+=== [10/24] CREATE EXTERNAL TABLE payments ( order_id STRING, payment_sequential INT, payment_type STRING, payment_install
+(no output)
+
+=== [11/24] DROP TABLE IF EXISTS reviews
+(no output)
+
+=== [12/24] CREATE EXTERNAL TABLE reviews ( review_id STRING, order_id STRING, review_score INT, review_comment_title STRI
+(no output)
+
+=== [13/24] DROP TABLE IF EXISTS products
+(no output)
+
+=== [14/24] CREATE EXTERNAL TABLE products ( product_id STRING, product_category_name STRING, product_name_lenght INT, pro
+(no output)
+
+=== [15/24] DROP TABLE IF EXISTS sellers
+(no output)
+
+=== [16/24] CREATE EXTERNAL TABLE sellers ( seller_id STRING, seller_zip_code_prefix STRING, seller_city STRING, seller_st
+(no output)
+
+=== [17/24] DROP TABLE IF EXISTS category_translation
+(no output)
+
+=== [18/24] CREATE EXTERNAL TABLE category_translation ( product_category_name STRING, product_category_name_english STRIN
+(no output)
+
+=== [19/24] DROP TABLE IF EXISTS orders_partitioned
+(no output)
+
+=== [20/24] CREATE TABLE orders_partitioned ( order_id STRING, customer_id STRING, order_status STRING, order_purchase_tim
+(no output)
+
+=== [21/24] SET hive.exec.dynamic.partition = true
+(no output)
+
+=== [22/24] SET hive.exec.dynamic.partition.mode = nonstrict
+(no output)
+
+=== [23/24] INSERT OVERWRITE TABLE orders_partitioned PARTITION (purchase_year_month) SELECT order_id, customer_id, order_
+No Stats for olist@orders, Columns: order_status, order_delivered_customer_date, order_purchase_timestamp, order_estimated_delivery_date, customer_id, order_id
+Query ID = abhishek_20260916170126_b133bfaa-bf2d-4aaf-a509-95a3e2c1fe19
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:29,303 Stage-1 map = 100%,  reduce = 0%
+2026-09-16 17:01:33,329 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1966939308_0001
+Loading data to table olist.orders_partitioned partition (purchase_year_month=null)
+Time taken to load dynamic partitions:	 0.151 seconds
+Time taken for adding to write entity:	 0.000 seconds
+Time taken to move files:	 0 ms
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 34844517 HDFS Write: 11528310 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
+=== [24/24] SELECT 'partitions created' AS check_name, count(*) AS partition_count FROM (SELECT DISTINCT purchase_year_mon
++---------------------+------------------+
+|     check_name      | partition_count  |
++---------------------+------------------+
+| partitions created  | 23               |
++---------------------+------------------+
+Query ID = abhishek_20260916170136_3ae6f27e-3ccc-453d-995c-47f13fff7014
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:39,229 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local778958160_0001
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2026-09-16 17:01:40,503 Stage-2 map = 100%,  reduce = 100%
+Ended Job = job_local1808617314_0002
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 23033148 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Stage-Stage-2:  HDFS Read: 23033148 HDFS Write: 0 HDFS EC Read: 0 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+
