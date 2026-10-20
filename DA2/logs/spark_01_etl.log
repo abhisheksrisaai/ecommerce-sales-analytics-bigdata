@@ -1,53 +1,53 @@
 WARNING: Using incubator modules: jdk.incubator.vector
 Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
-26/09/16 17:03:26 WARN Utils: Your hostname, Abhisheks-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 192.168.1.4 instead (on interface en0)
-26/09/16 17:03:26 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/10/06 11:31:39 WARN Utils: Your hostname, Abhisheks-MacBook-Air.local, resolves to a loopback address: 127.0.0.1; using 172.20.10.3 instead (on interface en0)
+26/10/06 11:31:39 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 /opt/homebrew/opt/apache-spark/libexec/python/lib/pyspark.zip/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
 Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
-26/09/16 17:03:27 INFO SparkContext: Running Spark version 4.2.0
-26/09/16 17:03:27 INFO SparkContext: OS info Mac OS X, 26.5, aarch64
-26/09/16 17:03:27 INFO SparkContext: Java version 21.0.12.1
-26/09/16 17:03:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-26/09/16 17:03:27 INFO ResourceUtils: ==============================================================
-26/09/16 17:03:27 INFO ResourceUtils: No custom resources configured for spark.driver.
-26/09/16 17:03:27 INFO ResourceUtils: ==============================================================
-26/09/16 17:03:27 INFO SparkContext: Submitted application: Olist ETL and Spark SQL analytics
-26/09/16 17:03:27 INFO SecurityManager: Changing view acls to: abhishek
-26/09/16 17:03:27 INFO SecurityManager: Changing modify acls to: abhishek
-26/09/16 17:03:27 INFO SecurityManager: Changing view acls groups to: abhishek
-26/09/16 17:03:27 INFO SecurityManager: Changing modify acls groups to: abhishek
-26/09/16 17:03:27 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
-26/09/16 17:03:28 INFO Utils: Successfully started service 'sparkDriver' on port 59812.
-26/09/16 17:03:28 INFO SparkEnv: Registering MapOutputTracker
-26/09/16 17:03:28 INFO SparkEnv: Registering BlockManagerMaster
-26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
-26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
-26/09/16 17:03:28 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
-26/09/16 17:03:28 INFO DiskBlockManager: Created local directory at /private/var/folders/7d/m5lkdhdj2pv8xf1hwvx3xvj80000gn/T/blockmgr-e58a6ca6-cda9-4e87-9122-6462ebf545ef
-26/09/16 17:03:28 INFO SparkEnv: Registering OutputCommitCoordinator
-26/09/16 17:03:28 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
-26/09/16 17:03:28 INFO Utils: Successfully started service 'SparkUI' on port 4040.
-26/09/16 17:03:28 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
-26/09/16 17:03:28 INFO ResourceProfile: Limiting resource is cpu
-26/09/16 17:03:28 INFO ResourceProfileManager: Added ResourceProfile id: 0
-26/09/16 17:03:28 INFO SecurityManager: Changing view acls to: abhishek
-26/09/16 17:03:28 INFO SecurityManager: Changing modify acls to: abhishek
-26/09/16 17:03:28 INFO SecurityManager: Changing view acls groups to: abhishek
-26/09/16 17:03:28 INFO SecurityManager: Changing modify acls groups to: abhishek
-26/09/16 17:03:28 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
-26/09/16 17:03:28 INFO Executor: Starting executor ID driver on host 192.168.1.4
-26/09/16 17:03:28 INFO Executor: Running Spark version 4.2.0
-26/09/16 17:03:28 INFO Executor: OS info Mac OS X, 26.5, aarch64
-26/09/16 17:03:28 INFO Executor: Java version 21.0.12.1
-26/09/16 17:03:28 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
-26/09/16 17:03:28 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@4f3498e9 for default.
-26/09/16 17:03:28 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 59813.
-26/09/16 17:03:28 INFO NettyBlockTransferService: Server created on 192.168.1.4:59813
-26/09/16 17:03:28 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
-26/09/16 17:03:28 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 192.168.1.4, 59813, None)
-26/09/16 17:03:28 INFO BlockManagerMasterEndpoint: Registering block manager 192.168.1.4:59813 with 1663.2 MiB RAM, BlockManagerId(driver, 192.168.1.4, 59813, None)
-26/09/16 17:03:28 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 192.168.1.4, 59813, None)
-26/09/16 17:03:28 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 192.168.1.4, 59813, None)
+26/10/06 11:31:39 INFO SparkContext: Running Spark version 4.2.0
+26/10/06 11:31:39 INFO SparkContext: OS info Mac OS X, 26.5, aarch64
+26/10/06 11:31:39 INFO SparkContext: Java version 21.0.12.1
+26/10/06 11:31:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/06 11:31:40 INFO ResourceUtils: ==============================================================
+26/10/06 11:31:40 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/10/06 11:31:40 INFO ResourceUtils: ==============================================================
+26/10/06 11:31:40 INFO SparkContext: Submitted application: Olist ETL and Spark SQL analytics
+26/10/06 11:31:40 INFO SecurityManager: Changing view acls to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing modify acls to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing view acls groups to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing modify acls groups to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
+26/10/06 11:31:40 INFO Utils: Successfully started service 'sparkDriver' on port 55509.
+26/10/06 11:31:40 INFO SparkEnv: Registering MapOutputTracker
+26/10/06 11:31:40 INFO SparkEnv: Registering BlockManagerMaster
+26/10/06 11:31:40 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/10/06 11:31:40 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/10/06 11:31:40 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/10/06 11:31:40 INFO DiskBlockManager: Created local directory at /private/var/folders/7d/m5lkdhdj2pv8xf1hwvx3xvj80000gn/T/blockmgr-3093b8d0-d00f-4e44-8d25-346dd90062e6
+26/10/06 11:31:40 INFO SparkEnv: Registering OutputCommitCoordinator
+26/10/06 11:31:40 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/10/06 11:31:40 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/10/06 11:31:40 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/10/06 11:31:40 INFO ResourceProfile: Limiting resource is cpu
+26/10/06 11:31:40 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/10/06 11:31:40 INFO SecurityManager: Changing view acls to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing modify acls to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing view acls groups to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: Changing modify acls groups to: abhishek
+26/10/06 11:31:40 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: abhishek groups with view permissions: EMPTY; users with modify permissions: abhishek; groups with modify permissions: EMPTY; RPC SSL disabled
+26/10/06 11:31:40 INFO Executor: Starting executor ID driver on host 172.20.10.3
+26/10/06 11:31:40 INFO Executor: Running Spark version 4.2.0
+26/10/06 11:31:40 INFO Executor: OS info Mac OS X, 26.5, aarch64
+26/10/06 11:31:40 INFO Executor: Java version 21.0.12.1
+26/10/06 11:31:40 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/10/06 11:31:40 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@502549e0 for default.
+26/10/06 11:31:40 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 55510.
+26/10/06 11:31:40 INFO NettyBlockTransferService: Server created on 172.20.10.3:55510
+26/10/06 11:31:40 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/10/06 11:31:40 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 172.20.10.3, 55510, None)
+26/10/06 11:31:40 INFO BlockManagerMasterEndpoint: Registering block manager 172.20.10.3:55510 with 1663.2 MiB RAM, BlockManagerId(driver, 172.20.10.3, 55510, None)
+26/10/06 11:31:40 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 172.20.10.3, 55510, None)
+26/10/06 11:31:40 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 172.20.10.3, 55510, None)
 
 === RAW ROW COUNTS (extract) ===
 orders                     99,441
@@ -64,7 +64,7 @@ rows after cleaning and joins: 112,650
 columns: order_id, product_category_name, product_id, customer_id, order_item_id, seller_id, shipping_limit_date, price, freight_value, line_revenue, order_status, order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date, purchase_year, purchase_month, delivery_days, is_late, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state, product_name_lenght, product_description_lenght, product_photos_qty, product_weight_g, product_length_cm, product_height_cm, product_width_cm, product_category_name_english, avg_review_score, review_count, order_value, payment_type, installments, category
 
 curated Parquet written to hdfs:///olist/warehouse/olist_curated (partitioned by purchase_month)
-26/09/16 17:03:42 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+26/10/06 11:31:53 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
 
 ==============================================================================
 A1. Monthly GMV trend

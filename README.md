@@ -14,6 +14,7 @@ served from MongoDB as per-customer recommendations.
 | Apache Hive | 4.2.1 | SQL warehouse, external + partitioned Parquet tables |
 | Apache Spark / PySpark | 4.2.0 | DataFrame ETL, Spark SQL, MLlib ALS |
 | MongoDB Community | 8.3.11 | Document serving store |
+| Streamlit | 1.50.0 | Interactive dashboard |
 | OpenJDK | 21 | Single JDK for the whole stack |
 
 ## Layout
@@ -29,6 +30,11 @@ served from MongoDB as per-customer recommendations.
 - `DA2/out/` – job outputs, `top_categories.csv`, `recommendations.csv`,
   `als_metrics.txt`
 - `DA2/evidence/` – dataset profile
+- `DA2/code/dashboard/` – Streamlit dashboard source (`app.py`)
+- `DA2/code/scripts/da3_loader_and_recommender.py` – DA-3 aggregate loader + popularity recommender
+- `DA2/code/scripts/gen_da3_report.py` – DA-3 report generator
+- `DA2/code/scripts/gen_da3_slides.py` – DA-3 slide generator
+- `DA3/` – final DA-3 deliverables (report, slides, dashboard screenshots)
 - `DA1/` – earlier topic-selection reports (one active, one dropped)
 - `PROJECT_CONTEXT.md` – running project memory (course facts, status, next steps)
 
@@ -49,6 +55,31 @@ python3 DA2/code/scripts/make_evidence_figs.py
 python3 DA2/code/scripts/gen_report.py
 ```
 
+## DA-3 dashboard and improved recommender
+
+The DA-3 work adds a Streamlit dashboard over MongoDB and replaces the ALS
+negative result with a popularity + category-affinity baseline.
+
+Make sure MongoDB is running, then load the dashboard aggregates and train the
+new recommender:
+
+```bash
+python3 DA2/code/scripts/da3_loader_and_recommender.py
+```
+
+Start the dashboard:
+
+```bash
+python3 -m streamlit run DA2/code/dashboard/app.py --server.port 8501
+```
+
+Regenerate DA-3 deliverables:
+
+```bash
+python3 DA2/code/scripts/gen_da3_report.py      # report/DA3_...
+python3 DA2/code/scripts/gen_da3_slides.py      # report/DA3_....pptx
+```
+
 ## Results (all verified, Hive and Spark agree exactly)
 
 - Monthly GMV, top categories (`health_beauty` ₹14.1L), state revenue (SP ₹57.7L)
@@ -56,8 +87,11 @@ python3 DA2/code/scripts/gen_report.py
 - Only 3.00% of customers ever order twice
 - ALS recommender is a documented negative result: with ~1.07 purchases per
   customer the matrix is too sparse for latent-factor models (RMSE 0.9702 vs
-  0.9324 global-mean baseline). A popularity baseline is the honest
-  recommendation for this data.
+  0.9324 global-mean baseline).
+- DA-3 replacement: popularity + category-affinity recommender with
+  HitRate@10 = 0.0952, Precision@10 = 0.0095, Recall@10 = 0.0952.
+- Interactive Streamlit dashboard over MongoDB with Overview, Sales Trends,
+  Categories, Geography, Delivery and Recommendations views.
 
 ## Team
 

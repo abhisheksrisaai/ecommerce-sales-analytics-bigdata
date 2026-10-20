@@ -47,8 +47,10 @@ Everything lives in `DA2/`. **The DA-1 claim that the environment was already se
 - Deliverables: `DA2/report/DA2_RegNo_Ecommerce-Sales-Recommendation.{docx,pdf}` (6 pages, all 5 required sections, 10 tables, 3 generated figures). Regenerate with `python3 DA2/code/scripts/make_diagrams.py` then `python3 DA2/code/scripts/gen_report.py`.
 - Evidence: `DA2/logs/*` (console transcripts for every stage), `DA2/evidence/data_profile.txt`, `DA2/out/*`.
 
-## Next Up (DA-3, due 20 Oct)
-- Dashboard over the MongoDB collections (the one unfinished item from the DA-1 plan).
-- Replace ALS with a popularity/category-affinity recommender and evaluate it with Precision@K / Recall@K.
-- Optional: Spark Structured Streaming over the review stream to cover the data-streams module (Module 6).
-- DA-3 needs an 8–10 page report plus 10–12 slides; results and dashboard must be demoable. Before submission, replace `RegNo` in the DA-2 filenames with the actual registration number.
+## Completed (DA-3, submitted 20 Oct)
+- Dashboard over the MongoDB collections: Streamlit app with six views.
+- Replaced ALS with a popularity/category-affinity recommender and evaluated it with HitRate@K, Precision@K, Recall@K.
+- Extended MongoDB serving layer with dashboard aggregates (monthly GMV, state revenue, delivery performance, payment distribution, review distribution, top products, repeat customers).
+- Generated 8-page final report and 12-slide presentation.
+- Renamed deliverables with registration number 23BLC1240.
+- Optional future work: Spark Structured Streaming over the review stream to cover the data-streams module (Module 6).

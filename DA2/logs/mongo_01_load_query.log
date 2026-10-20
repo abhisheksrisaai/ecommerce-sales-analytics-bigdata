@@ -44,7 +44,7 @@ Q5. High-confidence recommendations (score filter)
   product 2e511b5741ab14e7f5294df6f1310b03  customers=   16  avg_score=4.448
 
 ==============================================================================
-Collections in 'olist_analytics': ['recommendations', 'category_stats']
+Collections in 'olist_analytics': ['category_stats', 'recommendations']
 Indexes on recommendations:
   _id_: [('_id', 1)]
   recommendations.product_id_1: [('recommendations.product_id', 1)]
