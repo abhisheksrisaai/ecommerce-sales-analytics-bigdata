@@ -1,26 +1,20 @@
-# macOS
-.DS_Store
-
 # Python
 __pycache__/
 *.py[cod]
-.venv/
 *.egg-info/
+.pytest_cache/
 
-# Derby / Hive run leftovers (recreated on every run)
+# Project runtime data
+data/hadoop-data/
+logs/*.log
+out/*.csv
+out/mapreduce/build/
+
+# Compiled / runtime leftovers
+*.class
 derby.log
 *.lck
 
-# Local scratch data lives outside the repo (/Users/abhishek/bd-hadoop-data);
-# nothing under it should ever be committed.
-/bd-hadoop-data/
-
 # Editor / OS noise
-.vscode/
-.idea/
 .commandcode/
-*~
-
-# Compiled artifacts (rebuilt by 02_run_mapreduce.sh)
-*.class
-*/build/
+.DS_Store

@@ -1,99 +1,167 @@
 # E-Commerce Sales Analytics and Product Recommendation
 
-Course project for **BCSE402L – Big Data Analytics (VIT)**: a batch analytics
-pipeline over the Brazilian Olist marketplace data (~100k orders, 2016–2018)
-built on the Hadoop ecosystem. Raw CSVs are ingested into HDFS, cleaned and
-aggregated with MapReduce, modelled in Hive, cross-validated in Spark, and
-served from MongoDB as per-customer recommendations.
+End-to-end Big Data Analytics project for **BCSE402L – Big Data Analytics**.
 
-## Stack
+The pipeline ingests the Brazilian Olist e-commerce dataset (~100 k orders,
+~120 MB), cleans it, aggregates it with MapReduce, warehouses it in Hive,
+cross-validates it in Spark, enriches it with Portuguese NLP sentiment, builds
+and evaluates two recommenders, and serves everything through MongoDB to a
+Streamlit dashboard.
 
-| Component | Version | Role |
-|---|---|---|
-| Apache Hadoop (HDFS + YARN) | 3.5.0 | Distributed storage, pseudo-distributed |
-| Apache Hive | 4.2.1 | SQL warehouse, external + partitioned Parquet tables |
-| Apache Spark / PySpark | 4.2.0 | DataFrame ETL, Spark SQL, MLlib ALS |
-| MongoDB Community | 8.3.11 | Document serving store |
-| Streamlit | 1.50.0 | Interactive dashboard |
-| OpenJDK | 21 | Single JDK for the whole stack |
-
-## Layout
-
-- `DA2/code/` – pipeline source: `scripts/` (stage drivers incl. `run_all.sh`),
-  `mr/` (2 Java + 1 Streaming job), `hive/` (warehouse DDL + 10 analytics
-  queries), `spark/` (ETL, Spark SQL, ALS recommender), `mongo/` (serving
-  layer), `config/` (cluster XML configs)
-- `DA2/data/raw/` – the 9 Olist CSVs (122 MB) + `raw_sha256.txt` manifest
-- `DA2/report/` – DA-2 report (DOCX + PDF, with console-output appendix) and
-  the generated figures
-- `DA2/logs/` – console transcripts of every stage (the evidence trail)
-- `DA2/out/` – job outputs, `top_categories.csv`, `recommendations.csv`,
-  `als_metrics.txt`
-- `DA2/evidence/` – dataset profile
-- `DA2/code/dashboard/` – Streamlit dashboard source (`app.py`)
-- `DA2/code/scripts/da3_loader_and_recommender.py` – DA-3 aggregate loader + popularity recommender
-- `DA2/code/scripts/gen_da3_report.py` – DA-3 report generator
-- `DA2/code/scripts/gen_da3_slides.py` – DA-3 slide generator
-- `DA3/` – final DA-3 deliverables (report, slides, dashboard screenshots)
-- `DA1/` – earlier topic-selection reports (one active, one dropped)
-- `PROJECT_CONTEXT.md` – running project memory (course facts, status, next steps)
-
-## Reproduce
-
-macOS + Homebrew. Install the stack (`brew install hadoop hive apache-spark`),
-then:
-
-```bash
-bash DA2/code/scripts/run_all.sh   # six stages, exits 0 when all pass
-```
-
-Regenerate the figures and the report:
-
-```bash
-python3 DA2/code/scripts/make_diagrams.py
-python3 DA2/code/scripts/make_evidence_figs.py
-python3 DA2/code/scripts/gen_report.py
-```
-
-## DA-3 dashboard and improved recommender
-
-The DA-3 work adds a Streamlit dashboard over MongoDB and replaces the ALS
-negative result with a popularity + category-affinity baseline.
-
-Make sure MongoDB is running, then load the dashboard aggregates and train the
-new recommender:
-
-```bash
-python3 DA2/code/scripts/da3_loader_and_recommender.py
-```
-
-Start the dashboard:
-
-```bash
-python3 -m streamlit run DA2/code/dashboard/app.py --server.port 8501
-```
-
-Regenerate DA-3 deliverables:
-
-```bash
-python3 DA2/code/scripts/gen_da3_report.py      # report/DA3_...
-python3 DA2/code/scripts/gen_da3_slides.py      # report/DA3_....pptx
-```
-
-## Results (all verified, Hive and Spark agree exactly)
-
-- Monthly GMV, top categories (`health_beauty` ₹14.1L), state revenue (SP ₹57.7L)
-- On-time delivery averages 4.21★ vs 2.55★ late — the clearest finding
-- Only 3.00% of customers ever order twice
-- ALS recommender is a documented negative result: with ~1.07 purchases per
-  customer the matrix is too sparse for latent-factor models (RMSE 0.9702 vs
-  0.9324 global-mean baseline).
-- DA-3 replacement: popularity + category-affinity recommender with
-  HitRate@10 = 0.0952, Precision@10 = 0.0095, Recall@10 = 0.0952.
-- Interactive Streamlit dashboard over MongoDB with Overview, Sales Trends,
-  Categories, Geography, Delivery and Recommendations views.
+---
 
 ## Team
 
-K Pradeep Kumar (23BLC1240) · Vahran P (23BLC1221) · Ashvath Kumar (23BLC1269) ·
-K.P Abhishek (23BLC1292)
+- K Pradeep Kumar (23BLC1240)
+- Vahran P (23BLC1221)
+- Ashvath Kumar (23BLC1269)
+- K.P Abhishek (23BLC1292) – primary submitter
+
+---
+
+## Folder structure
+
+```text
+Ecommerce_BigData_Project/
+├── README.md                     # this file
+├── PROJECT_OVERVIEW.md           # high-level end-to-end flow
+├── requirements.txt              # Python dependencies
+├── run_project.sh                # data pipeline entry point only
+├── config/                       # paths, settings, Hadoop/Hive XML configs
+│   ├── paths.py
+│   ├── settings.py
+│   ├── settings.sh
+│   └── *.xml / jdk-opens.txt
+├── data/
+│   ├── raw/                      # nine Olist CSVs
+│   └── README.md
+├── src/
+│   ├── cleaning/                 # CSV normalisation for Hive
+│   ├── mapreduce/                # Java + Streaming jobs
+│   ├── hive/                     # warehouse + analytics HQL
+│   ├── spark/                    # ETL + ALS reference
+│   ├── sentiment/                # Portuguese lexicon sentiment
+│   ├── recommender/              # loader + baseline + NLP recommender
+│   ├── database/                 # MongoDB helpers
+│   ├── dashboard/                # Streamlit app
+│   └── utils/                    # report/slide/figure generators + stage scripts
+├── tests/                        # unit tests
+├── docs/                         # architecture, methodology, viva guide
+├── deliverables/                 # DA-1, DA-2, DA-3 reports/slides/screenshots
+├── archive/                      # superseded files
+├── logs/                         # console transcripts
+└── out/                          # generated CSVs, metrics, reports and MR build artifacts
+    ├── report/                   # PDF/DOCX report, PPTX slides, figures, screenshots
+    └── mapreduce/build/          # compiled Java MR classes and JAR
+```
+
+---
+
+## Prerequisites
+
+- macOS (developed and tested on Apple Silicon)
+- Homebrew with:
+  - `openjdk@21`
+  - `hadoop`
+  - `hive`
+  - `apache-spark`
+  - `mongodb-community`
+  - `python@3.11`
+- Python 3.11+ and the packages in `requirements.txt`
+- ~3 GB free RAM for local Spark/Hadoop
+
+Install Python dependencies:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+---
+
+## Quick start
+
+From a clean terminal in the project root:
+
+```bash
+# 1. Run the data pipeline (Hadoop/Hive/Spark/MongoDB)
+bash run_project.sh
+
+# 2. Start the dashboard
+python3 -m streamlit run src/dashboard/app.py --server.port 8501
+```
+
+Then open http://localhost:8501.
+
+---
+
+## Run individual stages
+
+```bash
+source config/settings.sh
+
+bash src/utils/setup_env.sh      # cluster bring-up
+bash src/utils/ingest_hdfs.sh    # HDFS raw + clean layers
+bash src/utils/run_mapreduce.sh  # Java + Streaming MR jobs
+bash src/utils/run_hive.sh       # Hive warehouse + 10 analytics queries
+bash src/utils/run_spark.sh      # Spark ETL + ALS reference
+bash src/utils/load_mongodb.sh   # aggregates, sentiment, recommendations
+```
+
+---
+
+## Run tests
+
+```bash
+python3 tests/test_da3.py
+```
+
+---
+
+## Regenerate deliverables
+
+```bash
+python3 -m src.utils.gen_figures       # out/report/fig1_architecture.png, fig3_workflow.png
+python3 -m src.utils.capture_dashboard # out/report/dashboard/*.png
+python3 -m src.utils.gen_report        # out/report/*.pdf + *.docx
+python3 -m src.utils.gen_slides        # out/report/*.pptx
+```
+
+---
+
+## Key results
+
+- Peak GMV: **R$1,153,364.20** in November 2017.
+- Top category: **health_beauty** (R$1,412,089.53).
+- Top state: **São Paulo (SP)** (R$5,769,703.15).
+- Repeat customer rate: **3.00%**.
+- On-time deliveries average **4.21★** vs **2.55★** for late deliveries.
+- DA-3 NLP-aware recommender HitRate@10 = **0.0654** vs baseline **0.0621**
+  on a same-dataset leave-one-out benchmark, an improvement of **0.33
+  percentage points** (5.3% relative). Both models use the same held-out set
+  and training-data-only popularity, category and sentiment features.
+- Evaluation features are built from the training split only. After evaluation,
+  the deployed MongoDB recommendations are rebuilt from the full dataset so
+  production uses all available historical signal.
+
+---
+
+## Documentation
+
+- `PROJECT_OVERVIEW.md` – plain-language flow from CSV to dashboard.
+- `docs/architecture.md` – component diagram and responsibilities.
+- `docs/methodology.md` – cleaning, MapReduce, Hive, Spark, NLP, recommender,
+  evaluation, limitations.
+- `docs/data_dictionary.md` – datasets, fields, derived metrics, MongoDB
+  collections.
+- `docs/viva_guide.md` – faculty-style code walkthrough with likely questions.
+
+---
+
+## Notes
+
+- The active recommender is the **NLP sentiment-aware** model in
+  `src/recommender/loader_and_recommender.py`.
+- The Spark ALS recommender is kept as a documented **negative result** because
+  the dataset is too sparse (~1.07 purchases per customer).
+- All hard-coded user paths were removed; paths are resolved from the project
+  root via `config/paths.py`.

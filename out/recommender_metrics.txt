@@ -1,0 +1,16 @@
+model=nlp_sentiment_popularity
+top_k=10
+eligible_customers=5334
+hit_rate@10=0.0654
+precision@10=0.0065
+recall@10=0.0654
+f1@10=0.0118
+
+[baseline_popularity_category_affinity]
+model=popularity_category_affinity
+top_k=10
+eligible_customers=5334
+hit_rate@10=0.0621
+precision@10=0.0062
+recall@10=0.0621
+f1@10=0.0113
