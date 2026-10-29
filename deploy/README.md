@@ -49,10 +49,9 @@ updated snapshot and push; Streamlit Cloud redeploys on the next push.
 4. Open **Advanced settings** and select Python 3.11 or 3.12. No secrets are
    required for the snapshot mode.
 5. Click **Deploy**. The first build takes a few minutes.
-6. When the app opens, the sidebar should show:
-
-   > Demo mode: MongoDB is unavailable, so this dashboard is reading a bundled
-   > snapshot of the serving collections.
+6. When the app opens it should render the Overview page with real numbers
+   (96,478 orders, R$15,419,773.75 total GMV). The app switches to the bundled
+   snapshot silently; there is no on-screen indicator of the active backend.
 
 ## Update the live app
 

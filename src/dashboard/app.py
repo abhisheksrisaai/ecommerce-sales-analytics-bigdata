@@ -323,13 +323,6 @@ page = st.sidebar.radio(
      "🗺️ Geography", "🚚 Delivery", "🎯 Recommendations"]
 )
 
-if data_backend() == "bundled":
-    st.sidebar.caption(
-        "Demo mode: MongoDB is unavailable, so this dashboard is reading a "
-        "bundled snapshot of the serving collections."
-    )
-
-
 # ---------------------------------------------------------------------------
 # Overview page
 # ---------------------------------------------------------------------------
