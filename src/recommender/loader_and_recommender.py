@@ -214,6 +214,32 @@ def load_aggregates(db):
     db.top_products.create_index([("revenue", DESCENDING)])
     print("loaded top_products:", len(top_prod), "documents")
 
+    # ------------------------------------------------------------------ category_stats
+    # The dashboard's Overview and Categories pages read this collection. It is
+    # computed directly from the fact table so the dashboard does not depend on
+    # the Spark `out/top_categories.csv` artefact being present.
+    cat_stats = (delivered.groupby("category")
+                 .agg(items_sold=("order_item_id", "count"),
+                      revenue=("line_revenue", "sum"))
+                 .reset_index())
+    cat_stats["revenue"] = cat_stats["revenue"].round(2)
+
+    # Average review score per category, matching the Spark ETL: reviews are
+    # first averaged per order, then averaged across the category's line items.
+    review_agg = (reviews.groupby("order_id")["review_score"]
+                  .mean().round(2).rename("avg_review_score"))
+    cat_reviews = delivered[["order_id", "category"]].merge(
+        review_agg, on="order_id", how="left")
+    cat_avg = (cat_reviews.groupby("category")["avg_review_score"]
+               .mean().round(2).reset_index(name="avg_review"))
+    cat_stats = cat_stats.merge(cat_avg, on="category", how="left")
+    cat_stats["avg_review"] = cat_stats["avg_review"].fillna(0.0)
+    cat_stats = cat_stats.sort_values("revenue", ascending=False)
+    db.category_stats.drop()
+    db.category_stats.insert_many(cat_stats.to_dict("records"))
+    db.category_stats.create_index([("revenue", DESCENDING)])
+    print("loaded category_stats:", len(cat_stats), "documents")
+
     # ------------------------------------------------------------------ repeat_customers
     cust_orders = (orders[orders["order_status"] == "delivered"]
                    .merge(customers, on="customer_id", how="left"))

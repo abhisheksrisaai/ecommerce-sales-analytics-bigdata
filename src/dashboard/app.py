@@ -9,13 +9,19 @@ The MongoDB collections are populated by `src.recommender.loader_and_recommender
 
 Inputs:
     - MongoDB database `olist_analytics` (configurable in `config/paths.py`).
+    - `deploy/snapshot/*.json.gz` (fallback for deployments without MongoDB).
     - `out/recommender_metrics.txt` (written by the recommender loader).
+
+When MongoDB is unreachable, the dashboard automatically falls back to the
+bundled snapshot in `deploy/snapshot/`. This keeps the public Streamlit
+deployment self-contained while the local/viva version continues to use the
+real MongoDB serving layer.
 
 Run:
     python3 -m streamlit run src/dashboard/app.py --server.port 8501
 
 Dependencies:
-    streamlit, pandas, plotly, pymongo.
+    streamlit, pandas, plotly, pymongo, mongomock.
 """
 import os
 import sys
@@ -32,6 +38,8 @@ if PROJECT_ROOT not in sys.path:
 
 from config.paths import METRICS_FILE, MONGO_DB_NAME, MONGO_URI
 from config.settings import DASHBOARD_TITLE
+
+BUNDLED_SNAPSHOT_DIR = os.path.join(PROJECT_ROOT, "deploy", "snapshot")
 
 st.set_page_config(
     page_title=DASHBOARD_TITLE,
@@ -55,25 +63,74 @@ STATE_NAMES = {
 
 
 # ---------------------------------------------------------------------------
-# MongoDB connection
+# Data backend: MongoDB with a bundled-snapshot fallback
 # ---------------------------------------------------------------------------
+@st.cache_resource(show_spinner="Loading bundled data snapshot...")
+def _get_bundled_db():
+    """Load `deploy/snapshot/*.json.gz` into an in-memory Mongo-compatible store.
+
+    The public Streamlit deployment has no MongoDB server. The snapshot is
+    exported from the local serving database by `deploy/export_snapshot.py` and
+    uses the same collection names and document shapes as the real database.
+    """
+    import gzip
+    import json
+
+    import mongomock
+
+    if not os.path.isdir(BUNDLED_SNAPSHOT_DIR):
+        raise FileNotFoundError(
+            f"Bundled snapshot directory not found: {BUNDLED_SNAPSHOT_DIR}"
+        )
+
+    client = mongomock.MongoClient()
+    db = client[MONGO_DB_NAME]
+    for filename in sorted(os.listdir(BUNDLED_SNAPSHOT_DIR)):
+        if not filename.endswith(".json.gz"):
+            continue
+        collection_name = filename[: -len(".json.gz")]
+        path = os.path.join(BUNDLED_SNAPSHOT_DIR, filename)
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            docs = json.load(handle)
+        if docs:
+            db[collection_name].insert_many(docs)
+    return db
+
+
 @st.cache_resource(show_spinner=False)
-def get_db():
-    """Return the MongoDB database object, cached for the Streamlit session.
+def _connect():
+    """Connect to MongoDB, or load the bundled snapshot if it is unreachable.
 
     Returns
     -------
-    pymongo.database.Database
-        The `olist_analytics` database (or the value of `MONGO_DB_NAME`).
+    tuple
+        `(database, backend_name)` where `backend_name` is `"mongodb"` or
+        `"bundled"`.
 
     Raises
     ------
     pymongo.errors.ServerSelectionTimeoutError
-        If MongoDB is not reachable within the configured timeout.
+        If MongoDB is unreachable and no bundled snapshot is available.
     """
-    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-    client.admin.command("ping")
-    return client[MONGO_DB_NAME]
+    try:
+        client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=3000)
+        client.admin.command("ping")
+        return client[MONGO_DB_NAME], "mongodb"
+    except Exception as exc:
+        if os.path.isdir(BUNDLED_SNAPSHOT_DIR):
+            print(f"MongoDB unavailable ({exc}); using bundled snapshot")
+            return _get_bundled_db(), "bundled"
+        raise
+
+
+def get_db():
+    """Return the serving database (MongoDB or the bundled snapshot)."""
+    return _connect()[0]
+
+
+def data_backend():
+    """Return `"mongodb"` or `"bundled"` for the active data backend."""
+    return _connect()[1]
 
 
 def coll(name):
@@ -86,9 +143,22 @@ def coll(name):
 
     Returns
     -------
-    pymongo.collection.Collection
+    pymongo.collection.Collection or mongomock.collection.Collection
     """
     return get_db()[name]
+
+
+# Resolve the backend once so the sidebar can report it and the app fails fast
+# when neither MongoDB nor a bundled snapshot is available.
+try:
+    get_db()
+except Exception as exc:
+    st.error(
+        "The dashboard could not connect to MongoDB and no bundled snapshot "
+        f"was found at `{BUNDLED_SNAPSHOT_DIR}`."
+    )
+    st.exception(exc)
+    st.stop()
 
 
 # ---------------------------------------------------------------------------
@@ -108,13 +178,17 @@ def load_monthly_gmv():
 def load_category_stats():
     """Load category-level revenue and review statistics.
 
-    The `category_stats` collection uses `_id` as the category name, so this
-    loader renames `_id` to `category` for clarity.
+    Supports both historical and current `category_stats` schemas:
+    the current loader stores the category in a `category` field, while older
+    versions used `_id` as the category name.
     """
     df = pd.DataFrame(list(coll("category_stats").find()))
     if df.empty:
         return df
-    df = df.rename(columns={"_id": "category"})
+    if "category" not in df.columns:
+        df = df.rename(columns={"_id": "category"})
+    else:
+        df = df.drop(columns=["_id"], errors="ignore")
     df = df.sort_values("revenue", ascending=False).reset_index(drop=True)
     return df
 
@@ -249,6 +323,12 @@ page = st.sidebar.radio(
      "🗺️ Geography", "🚚 Delivery", "🎯 Recommendations"]
 )
 
+if data_backend() == "bundled":
+    st.sidebar.caption(
+        "Demo mode: MongoDB is unavailable, so this dashboard is reading a "
+        "bundled snapshot of the serving collections."
+    )
+
 
 # ---------------------------------------------------------------------------
 # Overview page
@@ -312,6 +392,17 @@ if page == "🏠 Overview":
             )
     else:
         st.info("No payment data available.")
+
+    st.subheader("Active Recommender")
+    metrics = load_metrics()
+    rec1, rec2, rec3 = st.columns(3)
+    rec1.metric("Model", metrics.get("nlp_model", "N/A"))
+    rec2.metric("NLP HitRate@10", metrics.get("nlp_hit_rate@10", "N/A"))
+    rec3.metric("Baseline HitRate@10", metrics.get("baseline_hit_rate@10", "N/A"))
+    st.caption(
+        "Open the Recommendations page in the sidebar to look up a customer "
+        "and see the top recommended products."
+    )
 
 
 # ---------------------------------------------------------------------------

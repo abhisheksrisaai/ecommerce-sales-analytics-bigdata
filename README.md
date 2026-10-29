@@ -45,6 +45,7 @@ Ecommerce_BigData_Project/
 │   ├── database/                 # MongoDB helpers
 │   ├── dashboard/                # Streamlit app
 │   └── utils/                    # report/slide/figure generators + stage scripts
+├── deploy/                       # snapshot exporter + Streamlit Cloud deployment notes
 ├── tests/                        # unit tests
 ├── docs/                         # architecture, methodology, viva guide
 ├── deliverables/                 # DA-1, DA-2, DA-3 reports/slides/screenshots
@@ -91,6 +92,13 @@ python3 -m streamlit run src/dashboard/app.py --server.port 8501
 ```
 
 Then open http://localhost:8501.
+
+### Deploy the dashboard online
+
+The public Streamlit deployment uses a bundled snapshot of the MongoDB serving
+collections, so it does not need a database server. See
+[`deploy/README.md`](deploy/README.md) for the Streamlit Community Cloud steps
+and the snapshot export command.
 
 ---
 

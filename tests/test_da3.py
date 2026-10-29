@@ -96,6 +96,18 @@ class TestMongoDBSchemas(unittest.TestCase):
         missing = required - actual
         self.assertEqual(missing, set(), f"missing collections: {missing}")
 
+    def test_category_stats_are_populated_and_consistent(self):
+        """Every dashboard category must have revenue and review data."""
+        count = self.db.category_stats.count_documents({})
+        self.assertGreater(count, 0,
+                           "category_stats is empty; dashboard shows N/A")
+        top = self.db.category_stats.find_one(sort=[("revenue", -1)])
+        self.assertIsNotNone(top)
+        for field in ("category", "items_sold", "revenue", "avg_review"):
+            self.assertIn(field, top)
+        self.assertGreater(top["revenue"], 0)
+        self.assertGreater(top["items_sold"], 0)
+
     def test_recommendations_have_component_scores(self):
         doc = self.db.recommendations.find_one()
         self.assertIsNotNone(doc)

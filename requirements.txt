@@ -8,8 +8,11 @@ numpy>=1.23.0
 # MongoDB serving layer
 pymongo>=4.3.0
 
+# In-memory MongoDB fallback for the public dashboard deployment
+mongomock>=4.1.0
+
 # Dashboard
-streamlit>=1.28.0
+streamlit>=1.49.0
 plotly>=5.15.0
 
 # Report and presentation generation
